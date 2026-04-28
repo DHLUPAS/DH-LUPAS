@@ -119,6 +119,16 @@ width:250px;
 display:none;
 z-index:9999;
 text-align:left;
+
+/* 🔥 ADICIONADO (animação) */
+transition:all 0.3s ease;
+transform:translateY(-10px);
+opacity:0;
+}
+
+#cartBox.show{
+transform:translateY(0);
+opacity:1;
 }
 
 .item{
@@ -156,16 +166,53 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* ANIMAÇÃO */
+/* 🔥 TOAST */
+#toast{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:gold;
+color:black;
+padding:12px 20px;
+border-radius:10px;
+font-weight:bold;
+display:none;
+z-index:99999;
+}
+
+/* ANIMAÇÕES */
 @keyframes float{
 0%{transform:translateY(0);}
 50%{transform:translateY(-10px);}
 100%{transform:translateY(0);}
 }
+
+@keyframes toastAnim{
+0%{opacity:0;transform:translateY(20px);}
+100%{opacity:1;transform:translateY(0);}
+}
 </style>
 </head>
 
 <body>
+
+<!-- 🔥 TOAST -->
+<div id="toast">✔ Adicionado ao carrinho</div>
+
+<!-- 🔥 BOTÃO VOLTAR -->
+<div onclick="voltar()" style="
+position:fixed;
+top:70px;
+left:10px;
+background:#111;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+z-index:9999;
+">
+⬅ Voltar
+</div>
 
 <header>
 <div class="logo">DH LUPAS</div>
@@ -244,10 +291,23 @@ function addCart(){
 cart.push({nome, preco:price});
 localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
-alert("Adicionado ao carrinho!");
 
-/* abrir carrinho automático */
-document.getElementById("cartBox").style.display = "block";
+/* 🔥 TOAST BONITO */
+let t = document.getElementById("toast");
+t.style.display = "block";
+t.style.animation = "toastAnim 0.3s";
+
+setTimeout(()=>{
+t.style.display = "none";
+},2000);
+
+/* 🔥 ABRIR COM ANIMAÇÃO */
+let box = document.getElementById("cartBox");
+box.style.display = "block";
+setTimeout(()=>{
+box.classList.add("show");
+},10);
+
 localStorage.setItem("cartOpen","1");
 }
 
@@ -281,11 +341,14 @@ document.getElementById("total").innerText = total.toFixed(2);
 function toggleCart(){
 let box = document.getElementById("cartBox");
 
-if(box.style.display === "block"){
-box.style.display = "none";
+if(box.classList.contains("show")){
+box.classList.remove("show");
 localStorage.setItem("cartOpen","0");
 }else{
 box.style.display = "block";
+setTimeout(()=>{
+box.classList.add("show");
+},10);
 localStorage.setItem("cartOpen","1");
 }
 }
@@ -305,15 +368,19 @@ window.location.href =
 encodeURIComponent(msg);
 }
 
-/* 🔥 MANTER CARRINHO ABERTO */
-window.addEventListener("load", () => {
-
-let open = localStorage.getItem("cartOpen");
-
-if(open === "1"){
-document.getElementById("cartBox").style.display = "block";
+/* 🔥 VOLTAR */
+function voltar(){
+window.history.back();
 }
 
+/* 🔥 MANTER ABERTO */
+window.addEventListener("load", () => {
+let open = localStorage.getItem("cartOpen");
+if(open === "1"){
+let box = document.getElementById("cartBox");
+box.style.display = "block";
+setTimeout(()=>{box.classList.add("show");},10);
+}
 });
 
 updateCart();
