@@ -5,141 +5,232 @@
 <title>Platini Lupas</title>
 
 <style>
-body {
+/* =========================
+   RESET
+========================= */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: Arial, sans-serif;
   background: #0a0a0a;
   color: white;
 }
 
-/* HEADER PREMIUM */
+/* =========================
+   HEADER
+========================= */
 header {
-  padding: 30px 20px;
+  background: #000;
+  padding: 25px;
   text-align: center;
-  background: black;
   border-bottom: 1px solid #222;
 }
 
 header h1 {
-  margin: 0;
-  font-size: 30px;
+  font-size: 32px;
   letter-spacing: 3px;
 }
 
 header p {
-  margin-top: 8px;
   color: #aaa;
+  margin-top: 8px;
 }
 
-/* GRID */
+/* =========================
+   BANNER
+========================= */
+.banner {
+  height: 260px;
+  background: url('https://picsum.photos/1200/500?blur=2') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.banner h2 {
+  font-size: 34px;
+  background: rgba(0,0,0,0.6);
+  padding: 15px 25px;
+  border-radius: 10px;
+}
+
+/* =========================
+   SEÇÕES
+========================= */
+.section-title {
+  padding: 20px;
+  font-size: 20px;
+  color: gold;
+}
+
+/* =========================
+   GRID
+========================= */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 20px;
+  gap: 18px;
   padding: 20px;
 }
 
-/* CARD PREMIUM */
+/* =========================
+   CARD
+========================= */
 .card-link {
   text-decoration: none;
   color: inherit;
 }
 
 .card {
-  background: #121212;
-  border-radius: 14px;
+  background: #141414;
+  border-radius: 12px;
   overflow: hidden;
   transition: 0.3s;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  position: relative;
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 15px 25px rgba(255,215,0,0.08);
+  box-shadow: 0 10px 20px rgba(255,215,0,0.08);
 }
 
-/* imagem */
 .card img {
   width: 100%;
-  height: 200px;
+  height: 190px;
   object-fit: cover;
 }
 
-/* conteúdo */
 .card h3 {
+  font-size: 15px;
   margin: 10px;
-  font-size: 16px;
 }
 
 .card p {
-  margin: 0 10px 10px;
+  font-size: 12px;
   color: #aaa;
-  font-size: 13px;
+  margin: 0 10px 10px;
 }
 
-/* preço estilo loja */
 .price {
   margin: 0 10px 15px;
-  font-weight: bold;
   color: gold;
+  font-weight: bold;
 }
 
 /* badge */
 .badge {
   position: absolute;
+  top: 10px;
+  left: 10px;
   background: gold;
   color: black;
-  font-size: 11px;
   padding: 4px 8px;
+  font-size: 11px;
   border-radius: 6px;
-  margin: 10px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  border-top: 1px solid #222;
+  margin-top: 40px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+@media(max-width:600px){
+  header h1 { font-size: 24px; }
+  .banner h2 { font-size: 20px; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header>
   <h1>🕶️ PLATINI LUPAS</h1>
-  <p>Performance. Estilo. Presença.</p>
+  <p>Estilo, presença e performance</p>
 </header>
 
-<section class="grid" id="grid"></section>
+<!-- BANNER -->
+<div class="banner">
+  <h2>COLEÇÃO JULIET PREMIUM</h2>
+</div>
+
+<!-- MAIS VENDIDOS -->
+<h2 class="section-title">🔥 Mais Vendidos</h2>
+<section class="grid" id="grid1"></section>
+
+<!-- OFERTAS -->
+<h2 class="section-title">💸 Ofertas Especiais</h2>
+<section class="grid" id="grid2"></section>
+
+<!-- NOVOS -->
+<h2 class="section-title">🆕 Novidades</h2>
+<section class="grid" id="grid3"></section>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 Platini Lupas - Todos os direitos reservados
+</footer>
 
 <script>
 const produtos = [
-  {nome:"Juliet Chrome", desc:"Lente espelhada premium"},
-  {nome:"Juliet Black", desc:"Discreta e elegante"},
-  {nome:"Juliet Gold", desc:"Visual forte e chamativo"},
-  {nome:"Juliet Azul", desc:"Estilo moderno"},
-  {nome:"Juliet Vermelha", desc:"Estilo agressivo"},
-  {nome:"Juliet Prata", desc:"Clássica"},
-  {nome:"Juliet Dark", desc:"Escura premium"},
-  {nome:"Juliet Ice", desc:"Leve e clean"},
-  {nome:"Juliet Neon", desc:"Alta visibilidade"},
-  {nome:"Juliet Smoke", desc:"Fumê confortável"}
+  "Juliet Chrome","Juliet Black","Juliet Gold","Juliet Azul",
+  "Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice",
+  "Juliet Neon","Juliet Smoke","Juliet Polarizada","Juliet X",
+  "Juliet Pro","Juliet Street","Juliet Elite","Juliet Vision",
+  "Juliet Max","Juliet Classic","Juliet Braba","Juliet Top"
 ];
 
-const grid = document.getElementById("grid");
+function gerar(gridId, tipo){
+  const grid = document.getElementById(gridId);
 
-produtos.forEach((p, i) => {
+  produtos.forEach((nome, i) => {
 
-  const preco = 80 + (i % 3) * 30;
+    let preco = 199;
 
-  const badge = i % 4 === 0 ? `<div class="badge">🔥 OFERTA</div>` : "";
+    // lógica inteligente de preço
+    if(tipo === "oferta"){
+      preco = 79 + (i % 3) * 10;
+    }
+    else if(tipo === "novo"){
+      preco = 120 + (i % 2) * 30;
+    }
+    else {
+      preco = 150 + (i % 4) * 20;
+    }
 
-  grid.innerHTML += `
-    <a class="card-link" href="produto.html?nome=${encodeURIComponent(p.nome)}&desc=${encodeURIComponent(p.desc)}&img=${i}&preco=${preco}">
-      <div class="card">
-        ${badge}
-        <img src="https://picsum.photos/seed/juliet${i}/600/400">
-        <h3>${p.nome}</h3>
-        <p>${p.desc}</p>
-        <div class="price">R$ ${preco}</div>
-      </div>
-    </a>
-  `;
-});
+    const badge = (i % 4 === 0) ? `<div class="badge">🔥</div>` : "";
+
+    grid.innerHTML += `
+      <a class="card-link" href="produto.html?nome=${encodeURIComponent(nome)}&desc=Óculos estilo premium Juliet&img=${i}&preco=${preco}">
+        <div class="card">
+          ${badge}
+          <img src="https://picsum.photos/seed/juliet${i}/600/400">
+          <h3>${nome}</h3>
+          <p>Estilo premium e presença forte</p>
+          <div class="price">R$ ${preco}</div>
+        </div>
+      </a>
+    `;
+  });
+}
+
+gerar("grid1","normal");
+gerar("grid2","oferta");
+gerar("grid3","novo");
 </script>
 
 </body>
