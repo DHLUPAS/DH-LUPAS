@@ -1,11 +1,219 @@
-<!-- SEU CÓDIGO CONTINUA EXATAMENTE IGUAL ATÉ O SCRIPT -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>DH LUPAS - Produto</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="icon" type="image/png" href="https://dummyimage.com/64x64/000/ffd700&text=DH">
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0a0a0a;
+color:white;
+text-align:center;
+overflow-x:hidden;
+}
+
+/* HEADER */
+header{
+background:black;
+padding:14px;
+border-bottom:1px solid #111;
+position:sticky;
+top:0;
+z-index:999;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:20px;
+letter-spacing:4px;
+font-weight:900;
+}
+
+.cart{
+cursor:pointer;
+background:#111;
+padding:6px 10px;
+border-radius:8px;
+}
+
+/* CONTAINER */
+.container{
+max-width:600px;
+margin:auto;
+padding:15px;
+}
+
+/* IMG FLUTUANTE */
+.floating-img{
+width:100%;
+border-radius:16px;
+margin-top:10px;
+animation:float 4s ease-in-out infinite;
+box-shadow:0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* TAGS */
+.tag{
+display:inline-block;
+padding:6px 12px;
+background:#1a1a1a;
+border-radius:20px;
+font-size:12px;
+color:#aaa;
+margin:6px 4px;
+}
+
+/* PREÇO */
+.old{
+color:#666;
+text-decoration:line-through;
+font-size:15px;
+}
+
+.new{
+font-size:34px;
+font-weight:900;
+color:white;
+margin:5px 0;
+}
+
+/* BOX */
+.box{
+background:#111;
+padding:14px;
+border-radius:14px;
+margin-top:12px;
+text-align:left;
+font-size:13px;
+}
+
+/* BOTÃO */
+.btn{
+display:block;
+margin-top:18px;
+padding:16px;
+background:white;
+color:black;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* CARRINHO */
+#cartBox{
+position:fixed;
+top:60px;
+right:10px;
+background:#111;
+padding:15px;
+border-radius:12px;
+width:250px;
+display:none;
+z-index:9999;
+text-align:left;
+}
+
+.item{
+font-size:13px;
+margin-bottom:8px;
+border-bottom:1px solid #222;
+padding-bottom:5px;
+}
+
+.oldPrice{
+text-decoration:line-through;
+color:#777;
+font-size:12px;
+}
+
+.discount{
+color:gold;
+font-weight:bold;
+}
+
+.totalBox{
+margin-top:10px;
+border-top:1px solid #333;
+padding-top:10px;
+}
+
+.finalBtn{
+margin-top:10px;
+background:gold;
+color:black;
+padding:10px;
+border-radius:8px;
+text-align:center;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* ANIMAÇÃO */
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">DH LUPAS</div>
+<div class="cart" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div>
+</header>
+
+<!-- CARRINHO -->
+<div id="cartBox">
+<h3>Seu Carrinho</h3>
+<div id="cartItems"></div>
+
+<div class="totalBox">
+Total: R$ <span id="total">0</span>
+</div>
+
+<div class="finalBtn" onclick="finalizarCompra()">
+🔥 COMPRAR AGORA (CARRINHO)
+</div>
+
+</div>
+
+<div class="container">
+
+<h2 id="nome"></h2>
+
+<img id="img" class="floating-img">
+
+<div class="tag">🔥 Mais vendido</div>
+<div class="tag">⚡ Oferta especial</div>
+
+<div class="old">de R$ 199,00</div>
+<div class="new" id="price"></div>
+
+<div class="box">
+🕶️ Produto premium DH LUPAS<br>
+🚚 Entrega 3 a 10 dias úteis<br>
+🔒 Compra segura via WhatsApp
+</div>
+
+<a id="buy" class="btn">COMPRAR AGORA</a>
+
+<div class="btn" style="margin-top:10px;background:gold;" onclick="addCart()">
+ADICIONAR AO CARRINHO
+</div>
+
+</div>
 
 <script>
-
-/* =========================
-   🔥 NÃO APAGUEI NADA
-   SÓ ADICIONEI COISAS NOVAS
-========================= */
 
 const p = new URLSearchParams(window.location.search);
 
@@ -33,33 +241,12 @@ encodeURIComponent("Quero comprar: " + nome + " por R$ " + price);
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function addCart(){
-
-if(!nome){
-alert("Erro no produto!");
-return;
-}
-
 cart.push({nome, preco:price});
 localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
 alert("Adicionado ao carrinho!");
 }
 
-/* 🔥 REMOVER ITEM */
-function removeItem(index){
-cart.splice(index,1);
-localStorage.setItem("cart", JSON.stringify(cart));
-updateCart();
-}
-
-/* 🔥 LIMPAR CARRINHO */
-function limparCarrinho(){
-cart = [];
-localStorage.setItem("cart", JSON.stringify(cart));
-updateCart();
-}
-
-/* 🔥 ATUALIZAR */
 function updateCart(){
 document.getElementById("cartCount").innerText = cart.length;
 
@@ -70,7 +257,7 @@ let desconto = cart.length >= 2 ? 0.10 : 0;
 
 let total = 0;
 
-cart.forEach((item,i)=>{
+cart.forEach(item=>{
 
 let final = item.preco - (item.preco * desconto);
 total += final;
@@ -78,26 +265,11 @@ total += final;
 box.innerHTML += `
 <div class="item">
 ${item.nome}<br>
-
 <span class="oldPrice">R$ ${item.preco.toFixed(2)}</span><br>
 <span class="discount">R$ ${final.toFixed(2)}</span>
-
-<br>
-<button onclick="removeItem(${i})" 
-style="margin-top:5px;background:#222;color:white;border:none;padding:5px;border-radius:6px;cursor:pointer;">
-Remover
-</button>
-
 </div>
 `;
 });
-
-/* 🔥 AVISO DE DESCONTO */
-if(cart.length >= 2){
-box.innerHTML += `<div style="color:gold;font-size:12px;margin-top:8px;">
-🔥 Desconto de 10% aplicado!
-</div>`;
-}
 
 document.getElementById("total").innerText = total.toFixed(2);
 }
@@ -109,18 +281,13 @@ box.style.display = box.style.display === "block" ? "none" : "block";
 
 function finalizarCompra(){
 
-let msg = "🔥 Pedido DH LUPAS:\n\n";
+let msg = "🔥 Carrinho:\n";
 let desconto = cart.length >= 2 ? 0.10 : 0;
-let total = 0;
 
 cart.forEach(item=>{
 let final = item.preco - (item.preco * desconto);
-total += final;
-
-msg += `- ${item.nome}: R$ ${final.toFixed(2)}\n`;
+msg += `${item.nome} - R$ ${final.toFixed(2)}\n`;
 });
-
-msg += `\n💰 Total: R$ ${total.toFixed(2)}`;
 
 window.location.href =
 "https://wa.me/5512992440819?text=" +
@@ -130,3 +297,6 @@ encodeURIComponent(msg);
 updateCart();
 
 </script>
+
+</body>
+</html>
