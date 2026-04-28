@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>DH LUPAS - Produto</title>
+<title>DH LUPAS</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,123 +10,121 @@
 body{
 margin:0;
 font-family:Arial;
-background:#0a0a0a;
+background:#0b0b0b;
 color:white;
 text-align:center;
 }
 
-/* HEADER COM LOGO */
+/* HEADER LOGO NOVO */
 header{
-background:black;
-padding:15px;
+background:#000;
+padding:18px;
 border-bottom:1px solid #222;
 }
 
 .logo{
-font-size:22px;
-letter-spacing:3px;
-font-weight:bold;
+font-size:26px;
+letter-spacing:5px;
+font-weight:900;
+color:gold;
+text-shadow:0 0 10px rgba(255,215,0,0.2);
 }
 
 /* CONTAINER */
 .container{
-padding:15px;
-max-width:600px;
+max-width:650px;
 margin:auto;
-animation:fadeUp 0.6s ease;
+padding:16px;
 }
 
+/* IMAGEM */
 img{
 width:100%;
-border-radius:12px;
+border-radius:14px;
 margin-top:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* TAGS */
-.tag{
+/* BADGES */
+.badge{
 display:inline-block;
-padding:5px 10px;
-background:#222;
-border-radius:6px;
-font-size:12px;
-color:#aaa;
-margin:5px 3px;
+padding:6px 12px;
+border-radius:20px;
+font-size:11px;
+margin:6px 3px;
 }
 
-/* SELLO */
-.selo{
+.best{
 background:gold;
 color:black;
-padding:6px 10px;
-border-radius:6px;
 font-weight:bold;
-display:inline-block;
-margin-top:10px;
+}
+
+.stock{
+background:#ff3b3b;
+color:white;
+font-weight:bold;
+animation:pulse 1.2s infinite;
 }
 
 /* PREÇO */
 .old{
-text-decoration:line-through;
 color:#777;
+text-decoration:line-through;
 margin-top:10px;
 }
 
 .new{
 color:gold;
-font-size:30px;
+font-size:32px;
 font-weight:bold;
-margin:5px 0;
 }
 
-/* ESTOQUE */
-.estoque{
-color:#ff4d4d;
-font-weight:bold;
-margin-top:10px;
-animation:blink 1.2s infinite;
-}
-
-/* BOX */
+/* BOX MODERNO */
 .box{
-background:#141414;
-padding:12px;
-border-radius:10px;
-margin-top:10px;
+background:linear-gradient(145deg,#141414,#0f0f0f);
+padding:14px;
+border-radius:12px;
+margin-top:12px;
 text-align:left;
+}
+
+.box h3{
+margin:0 0 8px 0;
+color:gold;
+font-size:14px;
+}
+
+.box p{
+margin:4px 0;
 font-size:13px;
+color:#ccc;
 }
 
 /* BOTÃO */
 .btn{
 display:block;
-margin-top:15px;
-padding:15px;
+margin-top:16px;
+padding:16px;
 background:gold;
 color:black;
 font-weight:bold;
-border-radius:8px;
+border-radius:10px;
 text-decoration:none;
 font-size:16px;
-cursor:pointer;
 }
 
 /* ANIMAÇÕES */
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(15px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-@keyframes blink{
-0%{opacity:1;}
-50%{opacity:0.4;}
-100%{opacity:1;}
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 LOGO DE VOLTA -->
 <header>
 <div class="logo">DH LUPAS</div>
 </header>
@@ -137,37 +135,33 @@ to{opacity:1;transform:translateY(0);}
 
 <img id="img">
 
-<div id="selo"></div>
-
-<div class="tag">⚡ Oferta especial</div>
+<!-- BADGES NOVOS -->
+<div id="best"></div>
+<div class="badge stock" id="stock"></div>
 
 <div class="old">de R$ 199</div>
 <div class="new" id="price"></div>
 
-<!-- ESTOQUE -->
-<div class="estoque" id="estoque"></div>
-
-<!-- DESCRIÇÃO COMPLETA -->
+<!-- DESCRIÇÃO MELHORADA -->
 <div class="box">
-<h3>🕶️ Descrição</h3>
-<p>Óculos estilo urbano DH LUPAS</p>
-<p>Design moderno e confortável</p>
-<p>Visual premium para qualquer ocasião</p>
+<h3>DESCRIÇÃO DO PRODUTO</h3>
+<p>• Estilo urbano premium DH LUPAS</p>
+<p>• Design moderno e confortável</p>
+<p>• Ideal para uso diário e lifestyle</p>
 </div>
 
 <!-- ENVIO -->
 <div class="box">
-<h3>🚚 Envio</h3>
-<p>• 3 a 10 dias úteis</p>
-<p>• Processamento rápido após compra</p>
+<h3>ENVIO</h3>
+<p>• Entrega em 3 a 10 dias úteis</p>
+<p>• Processamento rápido após confirmação</p>
 </div>
 
 <!-- SEGURANÇA -->
 <div class="box">
-<h3>🔒 Segurança</h3>
-<p>✔ Compra direta via WhatsApp</p>
-<p>✔ Atendimento humano</p>
-<p>✔ Produto verificado</p>
+<h3>SEGURANÇA</h3>
+<p>• Compra 100% segura via WhatsApp</p>
+<p>• Atendimento direto com a loja</p>
 </div>
 
 <a id="buy" class="btn">🔥 COMPRAR AGORA</a>
@@ -188,29 +182,24 @@ document.getElementById("img").src =
 
 /* PREÇO */
 let price = 79 + (img % 4) * 15;
-document.getElementById("price").innerText =
-"por R$ " + price;
+document.getElementById("price")?.innerText = "por R$ " + price;
 
-/* MAIS VENDIDO EM ALGUNS */
+/* MAIS VENDIDO (VISUAL DIFERENTE MESMO) */
 if(img % 2 === 0){
-document.getElementById("selo").innerHTML =
-"<div class='selo'>🔥 MAIS VENDIDO</div>";
+document.getElementById("best").innerHTML =
+"<div class='badge best'>🔥 MAIS VENDIDO</div>";
 }
 
-/* ESTOQUE EM TODOS */
-let estoque = 2 + (img % 5);
-document.getElementById("estoque").innerText =
+/* ESTOQUE MAIS FORTE */
+let estoque = 1 + (img % 4);
+document.getElementById("stock").innerText =
 "⚠ Apenas " + estoque + " unidades restantes";
 
 /* WHATSAPP */
 document.getElementById("buy").onclick = () => {
 window.location.href =
 "https://wa.me/5512992440819?text=" +
-encodeURIComponent(
-"Quero comprar: " + nome +
-" | R$ " + price +
-" | Estoque: " + estoque
-);
+encodeURIComponent("Quero comprar: " + nome + " | R$ " + price + " | Estoque: " + estoque);
 };
 
 </script>
