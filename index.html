@@ -15,14 +15,13 @@ font-family:Arial;
 scroll-behavior:smooth;
 }
 
-/* BODY COM ESPAÇO PRO HEADER FIXO */
 body{
 background:#0a0a0a;
 color:white;
 padding-top:80px;
 }
 
-/* HEADER FIXO */
+/* HEADER FIXO + ANIMAÇÃO */
 header{
 background:black;
 padding:20px;
@@ -30,26 +29,31 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 border-bottom:1px solid #222;
-
-/* FIXO NO TOPO */
 position:fixed;
 top:0;
 left:0;
 width:100%;
 z-index:999;
+
+/* animação inicial */
+animation:fadeDown 0.8s ease;
 }
 
+/* LOGO BRILHO */
 .logo{
 font-size:22px;
 letter-spacing:3px;
 font-weight:bold;
+color:white;
+animation:glow 2.5s infinite alternate;
 }
 
+/* MENU */
 nav a{
 color:#aaa;
 margin:0 10px;
 text-decoration:none;
-font-size:14px;
+transition:.3s;
 }
 
 nav a:hover{
@@ -69,7 +73,7 @@ justify-content:center;
 background:rgba(0,0,0,0.6);
 padding:20px;
 border-radius:10px;
-font-size:26px;
+animation:fadeIn 1.2s ease;
 }
 
 /* GRID */
@@ -80,13 +84,13 @@ gap:18px;
 padding:20px;
 }
 
-/* CARD */
 .card{
 background:#141414;
 border-radius:12px;
 overflow:hidden;
-cursor:pointer;
 transition:.3s;
+cursor:pointer;
+animation:fadeUp 0.6s ease;
 }
 
 .card:hover{
@@ -102,7 +106,6 @@ object-fit:cover;
 
 .card h3{
 margin:10px;
-font-size:15px;
 }
 
 .card p{
@@ -126,24 +129,48 @@ background:gold;
 color:black;
 text-decoration:none;
 border-radius:8px;
-font-weight:bold;
 }
 
-/* FOOTER */
-footer{
-text-align:center;
-padding:30px;
-color:#666;
-border-top:1px solid #222;
-margin-top:40px;
+/* BOTÃO VOLTAR AO TOPO */
+.top-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:gold;
+color:black;
+padding:10px 14px;
+border-radius:50%;
+font-weight:bold;
+cursor:pointer;
+display:none;
+}
+
+/* ANIMAÇÕES */
+@keyframes fadeDown{
+from{opacity:0;transform:translateY(-20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+@keyframes glow{
+0%{text-shadow:0 0 5px gold;}
+100%{text-shadow:0 0 20px gold;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER FIXO -->
-<header id="topo">
+<header>
 <div class="logo">DH LUPAS</div>
 
 <nav>
@@ -153,15 +180,12 @@ margin-top:40px;
 </nav>
 </header>
 
-<!-- HERO -->
-<div class="hero">
+<div class="hero" id="topo">
 <h1>ESTILO. ATITUDE. PRESENÇA.</h1>
 </div>
 
-<!-- PRODUTOS -->
 <section class="grid" id="colecao"></section>
 
-<!-- CONTATO -->
 <section id="contato">
 <h2 style="color:gold;">Contato</h2>
 <p>Fale conosco pelo WhatsApp</p>
@@ -171,13 +195,16 @@ Abrir WhatsApp
 </a>
 </section>
 
-<!-- FOOTER -->
-<footer>
-© DH LUPAS - Todos os direitos reservados
+<footer style="text-align:center;padding:30px;color:#666;">
+© DH LUPAS
 </footer>
+
+<!-- BOTÃO VOLTAR AO TOPO -->
+<div class="top-btn" id="topBtn">↑</div>
 
 <script>
 
+/* PRODUTOS */
 const produtos = [
 "Juliet Chrome","Juliet Black","Juliet Gold","Juliet Azul",
 "Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice",
@@ -200,6 +227,17 @@ onclick="window.location.href='produto.html?nome=${encodeURIComponent(nome)}&img
 `;
 
 });
+
+/* BOTÃO VOLTAR AO TOPO */
+const btn = document.getElementById("topBtn");
+
+window.onscroll = () => {
+btn.style.display = window.scrollY > 300 ? "block" : "none";
+};
+
+btn.onclick = () => {
+window.scrollTo({top:0, behavior:"smooth"});
+};
 
 </script>
 
