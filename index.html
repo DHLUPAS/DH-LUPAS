@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>DH LUPAS</title>
 
-<!-- FAVICON (aba do navegador) -->
 <link rel="icon" type="image/png" href="https://dummyimage.com/64x64/000/fff&text=DH">
 
 <style>
@@ -13,6 +12,7 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:Arial;
+scroll-behavior:smooth;
 }
 
 body{
@@ -30,14 +30,13 @@ align-items:center;
 border-bottom:1px solid #222;
 }
 
-/* LOGO TEXTO */
 .logo{
 font-size:22px;
-font-weight:bold;
 letter-spacing:3px;
+font-weight:bold;
 }
 
-/* NAV */
+/* MENU */
 nav a{
 color:#aaa;
 margin:0 10px;
@@ -103,6 +102,29 @@ color:#aaa;
 font-size:12px;
 }
 
+/* CONTATO */
+#contato{
+padding:50px 20px;
+text-align:center;
+background:#111;
+}
+
+#contato h2{
+color:gold;
+margin-bottom:10px;
+}
+
+#contato a{
+display:inline-block;
+margin-top:15px;
+padding:12px 20px;
+background:gold;
+color:black;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+}
+
 /* FOOTER */
 footer{
 text-align:center;
@@ -121,22 +143,36 @@ header{flex-direction:column;gap:10px;}
 
 <body>
 
-<header>
+<!-- HEADER -->
+<header id="topo">
 <div class="logo">DH LUPAS</div>
 
 <nav>
-<a href="#">Home</a>
-<a href="#">Coleção</a>
-<a href="#">Contato</a>
+<a href="#topo">Home</a>
+<a href="#colecao">Coleção</a>
+<a href="#contato">Contato</a>
 </nav>
 </header>
 
+<!-- HERO -->
 <div class="hero">
-<h1>ESTILO,ATITUDE,PRESENÇA.</h1>
+<h1>ESTILO. ATITUDE. PRESENÇA.</h1>
 </div>
 
-<section class="grid" id="grid"></section>
+<!-- PRODUTOS -->
+<section class="grid" id="colecao"></section>
 
+<!-- CONTATO -->
+<section id="contato">
+<h2>📞 Contato</h2>
+<p>Fale conosco pelo WhatsApp</p>
+
+<a href="https://wa.me/5512992440819">
+Abrir WhatsApp
+</a>
+</section>
+
+<!-- FOOTER -->
 <footer>
 © DH LUPAS - Todos os direitos reservados
 </footer>
@@ -150,7 +186,7 @@ const produtos = [
 "Juliet Pro","Juliet Street","Juliet Elite","Juliet Vision"
 ];
 
-const grid = document.getElementById("grid");
+const grid = document.getElementById("colecao");
 
 produtos.forEach((nome,i)=>{
 
