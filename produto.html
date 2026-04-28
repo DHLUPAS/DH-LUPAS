@@ -120,7 +120,9 @@ display:none;
 z-index:9999;
 text-align:left;
 
-/* 🔥 ADICIONADO (animação) */
+/* ADD (visual melhor, não muda nada estrutural) */
+backdrop-filter: blur(10px);
+background: rgba(20,20,20,0.85);
 transition:all 0.3s ease;
 transform:translateY(-10px);
 opacity:0;
@@ -166,53 +168,29 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* 🔥 TOAST */
-#toast{
+/* 🔥 ADD ANIMAÇÃO VOAR */
+.fly-img{
 position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-background:gold;
-color:black;
-padding:12px 20px;
-border-radius:10px;
-font-weight:bold;
-display:none;
 z-index:99999;
+width:80px;
+border-radius:10px;
+pointer-events:none;
+transition:all 0.7s cubic-bezier(.5,-0.5,.5,1.5);
 }
 
-/* ANIMAÇÕES */
+/* ANIMAÇÃO */
 @keyframes float{
 0%{transform:translateY(0);}
 50%{transform:translateY(-10px);}
 100%{transform:translateY(0);}
-}
-
-@keyframes toastAnim{
-0%{opacity:0;transform:translateY(20px);}
-100%{opacity:1;transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 TOAST -->
-<div id="toast">✔ Adicionado ao carrinho</div>
-
-<!-- 🔥 BOTÃO VOLTAR -->
-<div onclick="voltar()" style="
-position:fixed;
-top:70px;
-left:10px;
-background:#111;
-padding:8px 12px;
-border-radius:8px;
-cursor:pointer;
-z-index:9999;
-">
-⬅ Voltar
-</div>
+<!-- 🔥 ADD SOM -->
+<audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
 
 <header>
 <div class="logo">DH LUPAS</div>
@@ -291,24 +269,18 @@ function addCart(){
 cart.push({nome, preco:price});
 localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
+alert("Adicionado ao carrinho!"); // NÃO REMOVIDO
 
-/* 🔥 TOAST BONITO */
-let t = document.getElementById("toast");
-t.style.display = "block";
-t.style.animation = "toastAnim 0.3s";
-
-setTimeout(()=>{
-t.style.display = "none";
-},2000);
-
-/* 🔥 ABRIR COM ANIMAÇÃO */
+/* ADD abrir carrinho */
 let box = document.getElementById("cartBox");
 box.style.display = "block";
-setTimeout(()=>{
-box.classList.add("show");
-},10);
-
+setTimeout(()=>{box.classList.add("show");},10);
 localStorage.setItem("cartOpen","1");
+
+/* 🔥 ADD efeitos */
+playSound();
+vibrar();
+flyToCart();
 }
 
 function updateCart(){
@@ -346,9 +318,7 @@ box.classList.remove("show");
 localStorage.setItem("cartOpen","0");
 }else{
 box.style.display = "block";
-setTimeout(()=>{
-box.classList.add("show");
-},10);
+setTimeout(()=>{box.classList.add("show");},10);
 localStorage.setItem("cartOpen","1");
 }
 }
@@ -368,12 +338,44 @@ window.location.href =
 encodeURIComponent(msg);
 }
 
-/* 🔥 VOLTAR */
-function voltar(){
-window.history.back();
+/* 🔥 ADD SOM */
+function playSound(){
+let s = document.getElementById("clickSound");
+if(s){s.currentTime=0;s.play();}
 }
 
-/* 🔥 MANTER ABERTO */
+/* 🔥 ADD VIBRAÇÃO */
+function vibrar(){
+if(navigator.vibrate){navigator.vibrate(100);}
+}
+
+/* 🔥 ADD ANIMAÇÃO VOAR */
+function flyToCart(){
+let img = document.getElementById("img");
+let cartIcon = document.querySelector(".cart");
+
+let clone = img.cloneNode(true);
+clone.classList.add("fly-img");
+
+let rect = img.getBoundingClientRect();
+clone.style.top = rect.top + "px";
+clone.style.left = rect.left + "px";
+
+document.body.appendChild(clone);
+
+let cartRect = cartIcon.getBoundingClientRect();
+
+setTimeout(()=>{
+clone.style.top = cartRect.top + "px";
+clone.style.left = cartRect.left + "px";
+clone.style.width = "20px";
+clone.style.opacity = "0.5";
+},10);
+
+setTimeout(()=>{clone.remove();},700);
+}
+
+/* 🔥 manter aberto */
 window.addEventListener("load", () => {
 let open = localStorage.getItem("cartOpen");
 if(open === "1"){
