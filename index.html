@@ -7,6 +7,8 @@
 <link rel="icon" type="image/png" href="https://dummyimage.com/64x64/000/fff&text=DH">
 
 <style>
+
+/* RESET */
 *{
 margin:0;
 padding:0;
@@ -34,6 +36,7 @@ border-bottom:1px solid #222;
 font-size:22px;
 letter-spacing:3px;
 font-weight:bold;
+animation:fadeDown 1s ease;
 }
 
 /* MENU */
@@ -41,7 +44,6 @@ nav a{
 color:#aaa;
 margin:0 10px;
 text-decoration:none;
-font-size:14px;
 }
 
 nav a:hover{
@@ -61,7 +63,7 @@ justify-content:center;
 background:rgba(0,0,0,0.6);
 padding:20px;
 border-radius:10px;
-font-size:26px;
+animation:fadeIn 1.5s ease;
 }
 
 /* GRID */
@@ -78,6 +80,7 @@ background:#141414;
 border-radius:12px;
 overflow:hidden;
 transition:.3s;
+animation:fadeUp 0.6s ease;
 }
 
 .card:hover{
@@ -93,58 +96,88 @@ object-fit:cover;
 
 .card h3{
 margin:10px;
-font-size:15px;
 }
 
 .card p{
 margin:0 10px 10px;
 color:#aaa;
-font-size:12px;
 }
 
-/* CONTATO */
-#contato{
-padding:50px 20px;
+/* BOTÃO */
+.btn{
+display:block;
+margin:10px;
+padding:8px;
+background:gold;
+color:black;
 text-align:center;
-background:#111;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
 }
 
-#contato h2{
+/* CARRINHO */
+.cart{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#111;
+padding:15px;
+border-radius:10px;
+width:250px;
+border:1px solid #333;
+}
+
+.cart h3{
 color:gold;
 margin-bottom:10px;
 }
 
-#contato a{
-display:inline-block;
-margin-top:15px;
-padding:12px 20px;
-background:gold;
-color:black;
-text-decoration:none;
-border-radius:8px;
+.cart-item{
+font-size:12px;
+margin:5px 0;
+color:#ccc;
+}
+
+.total{
+margin-top:10px;
 font-weight:bold;
 }
 
-/* FOOTER */
-footer{
+/* BOTÃO WHATS */
+.whats{
+display:block;
+margin-top:10px;
+padding:8px;
+background:gold;
+color:black;
 text-align:center;
-padding:30px;
-color:#666;
-border-top:1px solid #222;
-margin-top:40px;
+border-radius:6px;
+text-decoration:none;
 }
 
-/* RESPONSIVO */
-@media(max-width:700px){
-header{flex-direction:column;gap:10px;}
+/* ANIMAÇÕES */
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
 }
+
+@keyframes fadeDown{
+from{opacity:0;transform:translateY(-20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header id="topo">
+<header>
 <div class="logo">DH LUPAS</div>
 
 <nav>
@@ -154,53 +187,75 @@ header{flex-direction:column;gap:10px;}
 </nav>
 </header>
 
-<!-- HERO -->
 <div class="hero">
 <h1>ESTILO. ATITUDE. PRESENÇA.</h1>
 </div>
 
-<!-- PRODUTOS -->
 <section class="grid" id="colecao"></section>
 
-<!-- CONTATO -->
-<section id="contato">
-<h2>📞 Contato</h2>
-<p>Fale conosco pelo WhatsApp</p>
+<!-- CARRINHO -->
+<div class="cart">
+<h3>🛒 Carrinho</h3>
+<div id="cartItems"></div>
+<div class="total">Total: R$ <span id="total">0</span></div>
 
-<a href="https://wa.me/5512992440819">
-Abrir WhatsApp
-</a>
-</section>
-
-<!-- FOOTER -->
-<footer>
-© DH LUPAS - Todos os direitos reservados
-</footer>
+<a class="whats" id="buyBtn">Finalizar no WhatsApp</a>
+</div>
 
 <script>
 
 const produtos = [
 "Juliet Chrome","Juliet Black","Juliet Gold","Juliet Azul",
-"Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice",
-"Juliet Neon","Juliet Smoke","Juliet Polarizada","Juliet X",
-"Juliet Pro","Juliet Street","Juliet Elite","Juliet Vision"
+"Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice"
 ];
+
+let cart = [];
+
+function renderCart(){
+let total = 0;
+let html = "";
+
+cart.forEach(item=>{
+html += `<div class="cart-item">${item.nome} - R$ ${item.preco}</div>`;
+total += item.preco;
+});
+
+document.getElementById("cartItems").innerHTML = html;
+document.getElementById("total").innerText = total;
+
+document.getElementById("buyBtn").href =
+"https://wa.me/5512992440819?text=" +
+encodeURIComponent(
+"Quero comprar: " +
+cart.map(i=>i.nome + " (R$ " + i.preco + ")").join(", ") +
+" Total: R$ " + total
+);
+}
 
 const grid = document.getElementById("colecao");
 
 produtos.forEach((nome,i)=>{
 
+let preco = 99 + (i % 5) * 20;
+
 grid.innerHTML += `
-<a href="produto.html?nome=${encodeURIComponent(nome)}&desc=Óculos DH LUPAS premium&img=${i}">
 <div class="card">
 <img src="https://picsum.photos/seed/dh${i}/600/400">
 <h3>${nome}</h3>
-<p>Estilo premium e moderno</p>
+<p>Óculos premium DH LUPAS</p>
+
+<div class="btn" onclick="addToCart('${nome}',${preco})">
+Adicionar ao carrinho
 </div>
-</a>
+</div>
 `;
 
 });
+
+function addToCart(nome,preco){
+cart.push({nome,preco});
+renderCart();
+}
 
 </script>
 
