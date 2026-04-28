@@ -4,18 +4,29 @@
 <meta charset="UTF-8">
 <title>DH LUPAS</title>
 
+<link rel="icon" href="https://dummyimage.com/64x64/000/fff&text=DH">
+
 <style>
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Arial;
-background:#0a0a0a;
-color:white;
-text-align:center;
+scroll-behavior:smooth;
 }
 
+body{
+background:#0a0a0a;
+color:white;
+}
+
+/* HEADER */
 header{
 background:black;
 padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 border-bottom:1px solid #222;
 }
 
@@ -25,135 +36,155 @@ letter-spacing:3px;
 font-weight:bold;
 }
 
-.container{
-padding:20px;
-max-width:700px;
-margin:auto;
+nav a{
+color:#aaa;
+margin:0 10px;
+text-decoration:none;
+font-size:14px;
 }
 
-img{
-width:100%;
-border-radius:12px;
-}
-
-h1{
-margin:15px 0;
-}
-
-.price{
-font-size:26px;
+nav a:hover{
 color:gold;
-font-weight:bold;
 }
 
-.btn{
+/* HERO */
+.hero{
+height:300px;
+background:url('https://picsum.photos/1200/700?blur=2') center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.hero h1{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:10px;
+font-size:26px;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:#141414;
+border-radius:12px;
+overflow:hidden;
+cursor:pointer;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 10px 20px rgba(255,215,0,0.1);
+}
+
+.card img{
+width:100%;
+height:190px;
+object-fit:cover;
+}
+
+.card h3{
+margin:10px;
+font-size:15px;
+}
+
+.card p{
+margin:0 10px 10px;
+color:#aaa;
+font-size:12px;
+}
+
+/* CONTATO */
+#contato{
+padding:40px;
+text-align:center;
+background:#111;
+}
+
+#contato a{
 display:inline-block;
-margin-top:15px;
-padding:12px 20px;
+margin-top:10px;
+padding:10px 15px;
 background:gold;
 color:black;
 text-decoration:none;
 border-radius:8px;
-font-weight:bold;
-cursor:pointer;
 }
 
-.box{
-background:#141414;
-padding:15px;
-border-radius:10px;
-margin-top:15px;
-text-align:left;
-}
-
-.cart{
-margin-top:20px;
-padding:15px;
-background:#111;
-border-radius:10px;
-text-align:left;
+/* FOOTER */
+footer{
+text-align:center;
+padding:30px;
+color:#666;
+border-top:1px solid #222;
+margin-top:40px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
+<header id="topo">
 <div class="logo">DH LUPAS</div>
+
+<nav>
+<a href="#topo">Home</a>
+<a href="#colecao">Coleção</a>
+<a href="#contato">Contato</a>
+</nav>
 </header>
 
-<div class="container">
-
-<h1 id="nome"></h1>
-
-<img id="img">
-
-<p class="price" id="price"></p>
-
-<div class="box">
-<h3>🕶️ Detalhes</h3>
-<p>Produto premium DH LUPAS</p>
-<p>Estilo moderno e confortável</p>
+<div class="hero">
+<h1>ESTILO. ATITUDE. PRESENÇA.</h1>
 </div>
 
-<div class="btn" onclick="addCart()">
-Adicionar ao carrinho
-</div>
+<section class="grid" id="colecao"></section>
 
-<div class="cart">
-<h3>🛒 Carrinho</h3>
-<div id="items"></div>
-<p>Total: R$ <span id="total">0</span></p>
+<section id="contato">
+<h2 style="color:gold;">Contato</h2>
+<p>Fale conosco pelo WhatsApp</p>
 
-<a id="whats" class="btn" style="display:block;text-align:center;">
-Finalizar no WhatsApp
+<a href="https://wa.me/5512992440819">
+Abrir WhatsApp
 </a>
-</div>
+</section>
 
-</div>
+<footer>
+© DH LUPAS
+</footer>
 
 <script>
 
-const p = new URLSearchParams(window.location.search);
+const produtos = [
+"Juliet Chrome","Juliet Black","Juliet Gold","Juliet Azul",
+"Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice",
+"Juliet Neon","Juliet Smoke"
+];
 
-const nome = p.get("nome");
-const img = p.get("img");
+const grid = document.getElementById("colecao");
 
-document.getElementById("nome").innerText = nome;
-document.getElementById("img").src =
-"https://picsum.photos/seed/dh" + img + "/600/400";
+produtos.forEach((nome,i)=>{
 
-/* preço fixo */
-let preco = 99 + (img % 4) * 25;
-document.getElementById("price").innerText = "R$ " + preco;
+grid.innerHTML += `
+<div class="card"
+onclick="window.location.href='produto.html?nome=${encodeURIComponent(nome)}&img=${i}'">
 
-let cart = [];
+<img src="https://picsum.photos/seed/dh${i}/600/400">
+<h3>${nome}</h3>
+<p>Clique para ver produto</p>
 
-function addCart(){
-cart.push({nome,preco});
-render();
-}
+</div>
+`;
 
-function render(){
-let html = "";
-let total = 0;
-
-cart.forEach(i=>{
-html += `<p>${i.nome} - R$ ${i.preco}</p>`;
-total += i.preco;
 });
-
-document.getElementById("items").innerHTML = html;
-document.getElementById("total").innerText = total;
-
-document.getElementById("whats").href =
-"https://wa.me/5512992440819?text=" +
-encodeURIComponent(
-"Quero comprar: " +
-cart.map(i=>i.nome+" R$"+i.preco).join(", ") +
-" | Total: R$ "+total
-);
-}
 
 </script>
 
