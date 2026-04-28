@@ -2,9 +2,11 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>DH LUPAS</title>
+<title>DH LUPAS - Produto</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="icon" type="image/png" href="https://dummyimage.com/64x64/000/ffd700&text=DH">
 
 <style>
 body{
@@ -13,17 +15,24 @@ font-family:Arial;
 background:#0a0a0a;
 color:white;
 text-align:center;
+overflow-x:hidden;
 }
 
+/* HEADER CLEAN NIKE STYLE */
 header{
 background:black;
 padding:14px;
 border-bottom:1px solid #111;
+position:sticky;
+top:0;
+z-index:999;
 }
 
 .logo{
-font-weight:900;
+font-size:20px;
 letter-spacing:4px;
+font-weight:900;
+color:white;
 }
 
 /* CONTAINER */
@@ -31,59 +40,85 @@ letter-spacing:4px;
 max-width:600px;
 margin:auto;
 padding:15px;
-animation:fadeIn .8s ease;
 }
 
-/* FLUTUAÇÃO */
-img{
+/* 🖼️ IMAGEM FLUTUANTE */
+.floating-img{
 width:100%;
 border-radius:16px;
+margin-top:10px;
 animation:float 4s ease-in-out infinite;
 box-shadow:0 20px 40px rgba(0,0,0,0.6);
 }
 
-/* PREÇO */
+/* TAGS */
+.tag{
+display:inline-block;
+padding:6px 12px;
+background:#1a1a1a;
+border-radius:20px;
+font-size:12px;
+color:#aaa;
+margin:6px 4px;
+}
+
+/* PREÇO NIKE STYLE */
 .old{
 color:#666;
 text-decoration:line-through;
+margin-top:10px;
+font-size:15px;
 }
 
 .new{
-font-size:32px;
-font-weight:900;
 color:white;
+font-size:34px;
+font-weight:900;
+margin:5px 0;
 }
 
-/* BOX */
+/* BOX CLEAN */
 .box{
 background:#111;
 padding:14px;
 border-radius:14px;
-margin-top:10px;
+margin-top:12px;
 text-align:left;
+font-size:13px;
 }
 
-/* BOTÃO */
+/* BOTÃO PREMIUM */
 .btn{
 display:block;
-margin-top:15px;
+margin-top:18px;
 padding:16px;
 background:white;
 color:black;
-font-weight:bold;
-border-radius:12px;
 text-decoration:none;
+border-radius:12px;
+font-weight:bold;
+font-size:16px;
+transition:.3s;
 }
 
-/* ANIMAÇÕES */
+.btn:hover{
+transform:scale(1.05);
+}
+
+/* ✨ ANIMAÇÃO DE FLUTUAR */
 @keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-10px);}
-100%{transform:translateY(0);}
+0%{transform:translateY(0px);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0px);}
+}
+
+/* ENTRADA SUAVE STYLE NIKE */
+.container{
+animation:fadeIn 0.8s ease;
 }
 
 @keyframes fadeIn{
-from{opacity:0;transform:translateY(15px);}
+from{opacity:0;transform:translateY(20px);}
 to{opacity:1;transform:translateY(0);}
 }
 </style>
@@ -99,15 +134,28 @@ to{opacity:1;transform:translateY(0);}
 
 <h2 id="nome"></h2>
 
-<img id="img">
+<img id="img" class="floating-img">
 
-<div class="old">R$ 199</div>
+<div class="tag">🔥 Mais vendido</div>
+<div class="tag">⚡ Oferta especial</div>
+
+<div class="old">de R$ 199,00</div>
 <div class="new" id="price"></div>
 
 <div class="box">
-🕶️ Produto premium DH LUPAS<br>
-🚚 Entrega 3 a 10 dias úteis<br>
-🔒 Compra segura via WhatsApp
+<h3>🕶️ Produto Premium</h3>
+<p>Design moderno estilo urbano</p>
+<p>Acabamento premium DH LUPAS</p>
+</div>
+
+<div class="box">
+<h3>🚚 Envio</h3>
+<p>3 a 10 dias úteis</p>
+</div>
+
+<div class="box">
+<h3>🔒 Segurança</h3>
+<p>Compra segura via WhatsApp</p>
 </div>
 
 <a id="buy" class="btn">COMPRAR AGORA</a>
@@ -129,7 +177,7 @@ document.getElementById("img").src =
 let price = 79 + (img % 4) * 17;
 
 document.getElementById("price").innerText =
-"R$ " + price;
+"R$ " + price.toFixed(2);
 
 document.getElementById("buy").onclick = () => {
 window.location.href =
