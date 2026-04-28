@@ -15,12 +15,14 @@ font-family:Arial;
 scroll-behavior:smooth;
 }
 
+/* BODY COM ESPAÇO PRO HEADER FIXO */
 body{
 background:#0a0a0a;
 color:white;
+padding-top:80px;
 }
 
-/* HEADER */
+/* HEADER FIXO */
 header{
 background:black;
 padding:20px;
@@ -28,6 +30,13 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 border-bottom:1px solid #222;
+
+/* FIXO NO TOPO */
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:999;
 }
 
 .logo{
@@ -117,6 +126,7 @@ background:gold;
 color:black;
 text-decoration:none;
 border-radius:8px;
+font-weight:bold;
 }
 
 /* FOOTER */
@@ -132,6 +142,7 @@ margin-top:40px;
 
 <body>
 
+<!-- HEADER FIXO -->
 <header id="topo">
 <div class="logo">DH LUPAS</div>
 
@@ -142,12 +153,15 @@ margin-top:40px;
 </nav>
 </header>
 
+<!-- HERO -->
 <div class="hero">
 <h1>ESTILO. ATITUDE. PRESENÇA.</h1>
 </div>
 
+<!-- PRODUTOS -->
 <section class="grid" id="colecao"></section>
 
+<!-- CONTATO -->
 <section id="contato">
 <h2 style="color:gold;">Contato</h2>
 <p>Fale conosco pelo WhatsApp</p>
@@ -157,8 +171,9 @@ Abrir WhatsApp
 </a>
 </section>
 
+<!-- FOOTER -->
 <footer>
-© DH LUPAS
+© DH LUPAS - Todos os direitos reservados
 </footer>
 
 <script>
