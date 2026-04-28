@@ -13,7 +13,6 @@ color:white;
 text-align:center;
 }
 
-/* HEADER */
 header{
 background:black;
 padding:20px;
@@ -24,15 +23,12 @@ border-bottom:1px solid #222;
 font-size:22px;
 letter-spacing:3px;
 font-weight:bold;
-animation:fadeDown 0.8s ease;
 }
 
-/* CONTAINER */
 .container{
 max-width:700px;
 margin:auto;
 padding:20px;
-animation:fadeUp 0.8s ease;
 }
 
 img{
@@ -63,14 +59,7 @@ font-weight:bold;
 margin-top:10px;
 }
 
-/* ESTOQUE */
-.estoque{
-color:#ff4d4d;
-font-weight:bold;
-margin-top:10px;
-}
-
-/* PREÇOS */
+/* PREÇO */
 .old{
 color:#777;
 text-decoration:line-through;
@@ -85,13 +74,29 @@ font-weight:bold;
 margin:5px 0;
 }
 
-/* BOX */
+/* BOXES */
 .box{
 background:#141414;
 padding:15px;
 border-radius:10px;
 margin-top:15px;
 text-align:left;
+}
+
+/* SEGURANÇA */
+.secure{
+background:#0f0f0f;
+border:1px solid #222;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+text-align:left;
+}
+
+.secure p{
+margin:6px 0;
+color:#ccc;
+font-size:13px;
 }
 
 /* BOTÃO */
@@ -104,21 +109,15 @@ color:black;
 text-decoration:none;
 border-radius:8px;
 font-weight:bold;
-transition:.3s;
 }
 
-.btn:hover{
-transform:scale(1.05);
+/* ANIMAÇÃO */
+.container{
+animation:fadeUp 0.8s ease;
 }
 
-/* ANIMAÇÕES */
 @keyframes fadeUp{
 from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-20px);}
 to{opacity:1;transform:translateY(0);}
 }
 </style>
@@ -141,16 +140,32 @@ to{opacity:1;transform:translateY(0);}
 <div class="tag">🔥 Mais vendido</div>
 <div class="tag">⚡ Oferta especial</div>
 
-<div class="estoque" id="estoque"></div>
-
 <div class="old">de R$ 199,00</div>
 <div class="new" id="price"></div>
 
+<!-- DETALHES -->
 <div class="box">
 <h3>🕶️ Detalhes</h3>
 <p>Óculos premium DH LUPAS</p>
-<p>Estilo moderno e urbano</p>
-<p>Conforto e presença no visual</p>
+<p>Design moderno e confortável</p>
+<p>Estilo urbano e elegante</p>
+</div>
+
+<!-- ENVIO -->
+<div class="box">
+<h3>🚚 Envio</h3>
+<p>• Prazo de entrega: 3 a 10 dias úteis</p>
+<p>• Enviamos para todo o Brasil 🇧🇷</p>
+<p>• Código de rastreio enviado após postagem</p>
+</div>
+
+<!-- SEGURANÇA -->
+<div class="secure">
+<h3>🔒 Compra Segura</h3>
+<p>✔ Pagamento confirmado via WhatsApp</p>
+<p>✔ Produto enviado com garantia de entrega</p>
+<p>✔ Suporte direto com a loja</p>
+<p>✔ Compra 100% segura</p>
 </div>
 
 <a id="whats" class="btn">Comprar no WhatsApp</a>
@@ -169,22 +184,14 @@ document.getElementById("nome").innerText = nome;
 document.getElementById("img").src =
 "https://picsum.photos/seed/dh" + img + "/600/400";
 
-/* PREÇO DINÂMICO */
-let base = 199;
+/* PREÇO */
 let price = 79 + (img % 4) * 15;
 
-/* ESTOQUE SIMULADO */
-let estoque = 3 + (img % 4);
-
-/* SELLO AUTOMÁTICO */
+/* SELLO */
 document.getElementById("selo").innerText =
 img % 2 === 0 ? "🔥 MAIS VENDIDO" : "💎 PREMIUM";
 
-/* TEXTO ESTOQUE */
-document.getElementById("estoque").innerText =
-"⚠ Últimas unidades: " + estoque;
-
-/* PREÇO */
+/* PRICE */
 document.getElementById("price").innerText =
 "por R$ " + price.toFixed(2);
 
@@ -193,8 +200,8 @@ document.getElementById("whats").href =
 "https://wa.me/5512992440819?text=" +
 encodeURIComponent(
 "Quero comprar: " + nome +
-" | De R$199 por R$" + price.toFixed(2) +
-" | Últimas unidades: " + estoque
+" | Por R$ " + price.toFixed(2) +
+" | Envio 3 a 10 dias úteis"
 );
 
 </script>
