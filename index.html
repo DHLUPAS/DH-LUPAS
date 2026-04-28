@@ -5,82 +5,78 @@
 <title>Platini Lupas</title>
 
 <style>
-
-/* =========================
-   BASE
-========================= */
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:Arial;
 }
 
 body{
-font-family:Arial;
 background:#0a0a0a;
 color:white;
 }
 
-/* =========================
-   HEADER
-========================= */
-
+/* TOP BAR */
 header{
 background:black;
-padding:30px;
-text-align:center;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 border-bottom:1px solid #222;
 }
 
-header h1{
-font-size:34px;
-letter-spacing:3px;
+.logo{
+font-size:22px;
+font-weight:bold;
+letter-spacing:2px;
 }
 
-header p{
+nav a{
 color:#aaa;
-margin-top:8px;
+margin:0 10px;
+text-decoration:none;
+font-size:14px;
 }
 
-/* =========================
-   HERO
-========================= */
+nav a:hover{
+color:gold;
+}
 
+/* HERO */
 .hero{
-height:300px;
-background:url('https://picsum.photos/1200/600') center/cover;
+height:320px;
+background:url('https://picsum.photos/1200/700?blur=2') center/cover;
 display:flex;
 align-items:center;
 justify-content:center;
+text-align:center;
 }
 
-.hero h2{
+.hero h1{
 background:rgba(0,0,0,0.6);
 padding:20px;
 border-radius:10px;
+font-size:28px;
 }
 
-/* =========================
-   GRID
-========================= */
+/* SEÇÕES */
+.section-title{
+padding:20px;
+color:gold;
+font-size:18px;
+}
 
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
+gap:18px;
 padding:20px;
 }
 
-/* =========================
-   CARD
-========================= */
-
-.card-link{
-text-decoration:none;
-color:white;
-}
-
+/* CARD */
 .card{
 background:#141414;
 border-radius:12px;
@@ -96,7 +92,7 @@ box-shadow:0 10px 20px rgba(255,215,0,0.1);
 
 .card img{
 width:100%;
-height:200px;
+height:190px;
 object-fit:cover;
 }
 
@@ -107,8 +103,8 @@ font-size:15px;
 
 .card p{
 margin:0 10px 10px;
-font-size:12px;
 color:#aaa;
+font-size:12px;
 }
 
 .price{
@@ -124,9 +120,41 @@ top:10px;
 left:10px;
 background:gold;
 color:black;
-font-size:11px;
 padding:4px 8px;
+font-size:11px;
 border-radius:6px;
+}
+
+/* destaque */
+.featured{
+display:flex;
+padding:20px;
+gap:20px;
+}
+
+.featured img{
+width:50%;
+border-radius:12px;
+}
+
+.featured-text{
+flex:1;
+}
+
+.featured-text h2{
+color:gold;
+margin-bottom:10px;
+}
+
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 15px;
+background:gold;
+color:black;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
 }
 
 /* footer */
@@ -138,12 +166,15 @@ border-top:1px solid #222;
 margin-top:40px;
 }
 
-/* responsivo */
-@media(max-width:600px){
-header h1{font-size:24px;}
-.hero h2{font-size:18px;}
+/* mobile */
+@media(max-width:700px){
+.featured{
+flex-direction:column;
 }
-
+.featured img{
+width:100%;
+}
+}
 </style>
 
 </head>
@@ -151,77 +182,71 @@ header h1{font-size:24px;}
 <body>
 
 <header>
-<h1>🕶️ PLATINI LUPAS</h1>
-<p>Estilo. Presença. Atitude.</p>
+<div class="logo">🕶️ PLATINI LUPAS</div>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Ofertas</a>
+<a href="#">Mais Vendidos</a>
+<a href="#">Novidades</a>
+</nav>
 </header>
 
 <div class="hero">
-<h2>COLEÇÃO JULIET PREMIUM 2026</h2>
+<h1>ESTILO. PRESENÇA. ATITUDE.</h1>
 </div>
 
-<h2 style="padding:20px;color:gold;">🔥 Produtos em destaque</h2>
+<!-- DESTAQUE -->
+<div class="featured">
+<img src="https://picsum.photos/600/500?random=1">
+<div class="featured-text">
+<h2>Juliet Chrome Premium</h2>
+<p>O modelo mais procurado da coleção. Design moderno, lente espelhada e presença forte em qualquer lugar.</p>
+<a class="btn" href="#">Ver produto</a>
+</div>
+</div>
 
+<!-- PRODUTOS -->
+<h2 class="section-title">🔥 Coleção Principal</h2>
 <section class="grid" id="grid"></section>
 
 <footer>
-© Platini Lupas - Todos os direitos reservados
+© 2026 Platini Lupas - Todos os direitos reservados
 </footer>
 
 <script>
-
-/* =========================
-   PRODUTOS
-========================= */
 
 const produtos = [
 "Juliet Chrome","Juliet Black","Juliet Gold","Juliet Azul",
 "Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice",
 "Juliet Neon","Juliet Smoke","Juliet Polarizada","Juliet X",
-"Juliet Pro","Juliet Street","Juliet Elite","Juliet Vision",
-"Juliet Max","Juliet Classic","Juliet Braba","Juliet Top",
-"Juliet Ultra","Juliet Night","Juliet Fire","Juliet Sky",
-"Juliet Ocean"
+"Juliet Pro","Juliet Street","Juliet Elite","Juliet Vision"
 ];
 
-/* =========================
-   PREÇOS FIXOS (IMPORTANTE)
-========================= */
-
-function precoFixo(i){
-if(i % 6 === 0) return 79;
-if(i % 5 === 0) return 99;
-if(i % 4 === 0) return 129;
-if(i % 3 === 0) return 149;
-if(i % 2 === 0) return 169;
-return 199;
+function preco(i){
+if(i % 5 === 0) return 79;
+if(i % 4 === 0) return 99;
+if(i % 3 === 0) return 129;
+if(i % 2 === 0) return 149;
+return 179;
 }
-
-/* =========================
-   RENDER
-========================= */
 
 const grid = document.getElementById("grid");
 
 produtos.forEach((nome,i)=>{
 
-let preco = precoFixo(i);
-
-let badge = (i % 4 === 0)
-? `<div class="badge">🔥 OFERTA</div>`
-: "";
+let p = preco(i);
+let badge = i % 3 === 0 ? `<div class="badge">🔥</div>` : "";
 
 grid.innerHTML += `
-<a class="card-link"
-href="produto.html?nome=${encodeURIComponent(nome)}&desc=Óculos Juliet premium&img=${i}&preco=${preco}">
-
+<a href="produto.html?nome=${encodeURIComponent(nome)}&desc=Óculos premium Juliet&img=${i}&preco=${p}">
 <div class="card">
 ${badge}
 <img src="https://picsum.photos/seed/juliet${i}/600/400">
 <h3>${nome}</h3>
-<p>Design premium e estilo forte</p>
-<div class="price">R$ ${preco}</div>
+<p>Estilo premium e moderno</p>
+<div class="price">R$ ${p}</div>
 </div>
-
 </a>
 `;
 
