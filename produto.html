@@ -2,123 +2,125 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>DH LUPAS</title>
+<title>DH LUPAS - Produto</title>
 
+<!-- MOBILE FIRST -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="icon" type="image/png" href="https://dummyimage.com/64x64/000/ffd700&text=DH">
 
 <style>
 body{
 margin:0;
 font-family:Arial;
-background:#0b0b0b;
+background:#0a0a0a;
 color:white;
 text-align:center;
 }
 
-/* HEADER LOGO NOVO */
+/* HEADER MAIS LIMPO MOBILE */
 header{
-background:#000;
-padding:18px;
+background:black;
+padding:14px;
 border-bottom:1px solid #222;
+position:sticky;
+top:0;
+z-index:999;
 }
 
 .logo{
-font-size:26px;
-letter-spacing:5px;
-font-weight:900;
-color:gold;
-text-shadow:0 0 10px rgba(255,215,0,0.2);
+font-size:20px;
+letter-spacing:3px;
+font-weight:bold;
 }
 
-/* CONTAINER */
+/* CONTAINER MOBILE */
 .container{
-max-width:650px;
-margin:auto;
-padding:16px;
+max-width:100%;
+padding:12px;
 }
 
-/* IMAGEM */
+/* IMAGEM GRANDE MOBILE */
 img{
 width:100%;
 border-radius:14px;
 margin-top:10px;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* BADGES */
-.badge{
+/* TAGS MAIORES PRA TOQUE */
+.tag{
 display:inline-block;
 padding:6px 12px;
+background:#222;
 border-radius:20px;
-font-size:11px;
-margin:6px 3px;
+font-size:12px;
+color:#aaa;
+margin:6px 4px;
 }
 
-.best{
-background:gold;
-color:black;
+/* URGÊNCIA DESTACADA */
+.urgencia{
+color:#ff4d4d;
 font-weight:bold;
+margin-top:10px;
+font-size:14px;
+animation:blink 1.2s infinite;
 }
 
-.stock{
-background:#ff3b3b;
-color:white;
-font-weight:bold;
-animation:pulse 1.2s infinite;
-}
-
-/* PREÇO */
+/* PREÇO GRANDE MOBILE */
 .old{
 color:#777;
 text-decoration:line-through;
 margin-top:10px;
+font-size:16px;
 }
 
 .new{
 color:gold;
-font-size:32px;
+font-size:30px;
 font-weight:bold;
+margin:5px 0;
 }
 
-/* BOX MODERNO */
+/* BOX MAIS LIMPO */
 .box{
-background:linear-gradient(145deg,#141414,#0f0f0f);
+background:#141414;
 padding:14px;
 border-radius:12px;
 margin-top:12px;
 text-align:left;
-}
-
-.box h3{
-margin:0 0 8px 0;
-color:gold;
-font-size:14px;
-}
-
-.box p{
-margin:4px 0;
 font-size:13px;
-color:#ccc;
 }
 
-/* BOTÃO */
+/* SEGURANÇA */
+.secure{
+background:#0f0f0f;
+border:1px solid #222;
+padding:14px;
+border-radius:12px;
+margin-top:12px;
+text-align:left;
+font-size:13px;
+}
+
+/* BOTÃO GRANDE MOBILE */
 .btn{
 display:block;
-margin-top:16px;
+margin-top:18px;
 padding:16px;
 background:gold;
 color:black;
-font-weight:bold;
-border-radius:10px;
 text-decoration:none;
+border-radius:10px;
+font-weight:bold;
 font-size:16px;
 }
 
 /* ANIMAÇÕES */
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.05);}
-100%{transform:scale(1);}
+@keyframes blink{
+0%{opacity:1;}
+50%{opacity:0.4;}
+100%{opacity:1;}
 }
 </style>
 </head>
@@ -131,37 +133,34 @@ font-size:16px;
 
 <div class="container">
 
-<h1 id="nome"></h1>
+<h2 id="nome"></h2>
 
 <img id="img">
 
-<!-- BADGES NOVOS -->
-<div id="best"></div>
-<div class="badge stock" id="stock"></div>
+<div class="tag">🔥 Mais vendido</div>
+<div class="tag">⚡ Oferta especial</div>
 
-<div class="old">de R$ 199</div>
+<div class="urgencia" id="estoque"></div>
+
+<div class="old">de R$ 199,00</div>
 <div class="new" id="price"></div>
 
-<!-- DESCRIÇÃO MELHORADA -->
 <div class="box">
-<h3>DESCRIÇÃO DO PRODUTO</h3>
-<p>• Estilo urbano premium DH LUPAS</p>
-<p>• Design moderno e confortável</p>
-<p>• Ideal para uso diário e lifestyle</p>
+<h3>🕶️ Produto Premium</h3>
+<p>Design moderno e confortável para o dia a dia</p>
+<p>Estilo urbano DH LUPAS</p>
 </div>
 
-<!-- ENVIO -->
 <div class="box">
-<h3>ENVIO</h3>
-<p>• Entrega em 3 a 10 dias úteis</p>
-<p>• Processamento rápido após confirmação</p>
+<h3>🚚 Envio</h3>
+<p>• 3 a 10 dias úteis</p>
+<p>• Envio rápido após confirmação</p>
 </div>
 
-<!-- SEGURANÇA -->
-<div class="box">
-<h3>SEGURANÇA</h3>
-<p>• Compra 100% segura via WhatsApp</p>
-<p>• Atendimento direto com a loja</p>
+<div class="secure">
+<h3>🔒 Segurança</h3>
+<p>✔ Compra direta com a loja</p>
+<p>✔ Produto testado e aprovado</p>
 </div>
 
 <a id="buy" class="btn">🔥 COMPRAR AGORA</a>
@@ -181,25 +180,27 @@ document.getElementById("img").src =
 "https://picsum.photos/seed/dh" + img + "/600/400";
 
 /* PREÇO */
-let price = 79 + (img % 4) * 15;
-document.getElementById("price")?.innerText = "por R$ " + price;
+let price = 79 + (img % 4) * 17;
 
-/* MAIS VENDIDO (VISUAL DIFERENTE MESMO) */
-if(img % 2 === 0){
-document.getElementById("best").innerHTML =
-"<div class='badge best'>🔥 MAIS VENDIDO</div>";
-}
+/* ESTOQUE */
+let estoque = 2 + (img % 3);
 
-/* ESTOQUE MAIS FORTE */
-let estoque = 1 + (img % 4);
-document.getElementById("stock").innerText =
+document.getElementById("estoque").innerText =
 "⚠ Apenas " + estoque + " unidades restantes";
 
-/* WHATSAPP */
+/* PREÇO */
+document.getElementById("price").innerText =
+"por R$ " + price.toFixed(2);
+
+/* WHATS */
+let msg =
+"🔥 Quero comprar: " + nome +
+" | R$ " + price.toFixed(2) +
+" | Estoque: " + estoque;
+
 document.getElementById("buy").onclick = () => {
 window.location.href =
-"https://wa.me/5512992440819?text=" +
-encodeURIComponent("Quero comprar: " + nome + " | R$ " + price + " | Estoque: " + estoque);
+"https://wa.me/5512992440819?text=" + encodeURIComponent(msg);
 };
 
 </script>
