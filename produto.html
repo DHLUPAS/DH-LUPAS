@@ -13,6 +13,7 @@ color:white;
 text-align:center;
 }
 
+/* HEADER */
 header{
 background:black;
 padding:20px;
@@ -23,18 +24,26 @@ border-bottom:1px solid #222;
 font-size:22px;
 letter-spacing:3px;
 font-weight:bold;
+animation:fadeDown 0.6s ease;
 }
 
+/* CONTAINER */
 .container{
 max-width:700px;
 margin:auto;
 padding:20px;
+animation:fadeUp 0.7s ease;
 }
 
 img{
 width:100%;
 border-radius:12px;
 margin-top:10px;
+transition:0.3s;
+}
+
+img:hover{
+transform:scale(1.03);
 }
 
 /* TAGS */
@@ -59,7 +68,7 @@ font-weight:bold;
 margin-top:10px;
 }
 
-/* PREÇO */
+/* PREÇOS */
 .old{
 color:#777;
 text-decoration:line-through;
@@ -74,7 +83,7 @@ font-weight:bold;
 margin:5px 0;
 }
 
-/* BOXES */
+/* BOX */
 .box{
 background:#141414;
 padding:15px;
@@ -93,31 +102,38 @@ margin-top:15px;
 text-align:left;
 }
 
-.secure p{
-margin:6px 0;
-color:#ccc;
-font-size:13px;
-}
-
-/* BOTÃO */
+/* BOTÕES */
 .btn{
-display:inline-block;
-margin-top:20px;
+display:block;
+margin-top:15px;
 padding:12px 20px;
 background:gold;
 color:black;
 text-decoration:none;
 border-radius:8px;
 font-weight:bold;
+cursor:pointer;
+transition:0.3s;
 }
 
-/* ANIMAÇÃO */
-.container{
-animation:fadeUp 0.8s ease;
+.btn:hover{
+transform:scale(1.05);
 }
 
+/* BOTÃO URGENTE */
+.buy{
+background:#ffcc00;
+box-shadow:0 0 15px rgba(255,215,0,0.4);
+}
+
+/* ANIMAÇÕES */
 @keyframes fadeUp{
 from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes fadeDown{
+from{opacity:0;transform:translateY(-20px);}
 to{opacity:1;transform:translateY(0);}
 }
 </style>
@@ -147,28 +163,29 @@ to{opacity:1;transform:translateY(0);}
 <div class="box">
 <h3>🕶️ Detalhes</h3>
 <p>Óculos premium DH LUPAS</p>
-<p>Design moderno e confortável</p>
-<p>Estilo urbano e elegante</p>
+<p>Estilo moderno e confortável</p>
+<p>Visual urbano e marcante</p>
 </div>
 
 <!-- ENVIO -->
 <div class="box">
 <h3>🚚 Envio</h3>
-<p>• Prazo de entrega: 3 a 10 dias úteis</p>
-<p>• Enviamos para todo o Brasil 🇧🇷</p>
-<p>• Código de rastreio enviado após postagem</p>
+<p>• Prazo: 3 a 10 dias úteis</p>
+<p>• Processamento rápido após pagamento</p>
 </div>
 
 <!-- SEGURANÇA -->
 <div class="secure">
 <h3>🔒 Compra Segura</h3>
-<p>✔ Pagamento confirmado via WhatsApp</p>
-<p>✔ Produto enviado com garantia de entrega</p>
-<p>✔ Suporte direto com a loja</p>
-<p>✔ Compra 100% segura</p>
+<p>✔ Atendimento direto no WhatsApp</p>
+<p>✔ Produto testado e aprovado</p>
+<p>✔ Compra segura e confiável</p>
 </div>
 
-<a id="whats" class="btn">Comprar no WhatsApp</a>
+<!-- BOTÕES -->
+<a id="buyNow" class="btn buy">🔥 COMPRAR AGORA</a>
+
+<a id="whats" class="btn">Comprar pelo WhatsApp</a>
 
 </div>
 
@@ -191,18 +208,23 @@ let price = 79 + (img % 4) * 15;
 document.getElementById("selo").innerText =
 img % 2 === 0 ? "🔥 MAIS VENDIDO" : "💎 PREMIUM";
 
-/* PRICE */
+/* PREÇO FINAL */
 document.getElementById("price").innerText =
 "por R$ " + price.toFixed(2);
 
 /* WHATSAPP */
-document.getElementById("whats").href =
-"https://wa.me/5512992440819?text=" +
-encodeURIComponent(
+let msg =
 "Quero comprar: " + nome +
-" | Por R$ " + price.toFixed(2) +
-" | Envio 3 a 10 dias úteis"
-);
+" | Por R$ " + price.toFixed(2);
+
+document.getElementById("whats").href =
+"https://wa.me/5512992440819?text=" + encodeURIComponent(msg);
+
+/* BOTÃO COMPRAR AGORA (URGENTE) */
+document.getElementById("buyNow").onclick = () => {
+window.location.href =
+"https://wa.me/5512992440819?text=" + encodeURIComponent("🔥 COMPRA RÁPIDA: " + msg);
+};
 
 </script>
 
