@@ -2,11 +2,9 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>DH LUPAS - Produto</title>
+<title>Produto</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="icon" type="image/png" href="https://dummyimage.com/64x64/000/ffd700&text=DH">
 
 <style>
 body{
@@ -17,130 +15,51 @@ color:white;
 text-align:center;
 }
 
-/* HEADER */
 header{
 background:black;
 padding:14px;
-border-bottom:1px solid #222;
-position:sticky;
-top:0;
-z-index:999;
+font-weight:900;
 }
 
-.logo{
-font-size:20px;
-letter-spacing:3px;
-font-weight:bold;
-}
-
-/* CONTAINER */
 .container{
-max-width:100%;
-padding:12px;
+max-width:600px;
+margin:auto;
+padding:15px;
 }
 
-/* IMAGEM */
 img{
 width:100%;
 border-radius:14px;
-margin-top:10px;
+animation:float 4s ease-in-out infinite;
 }
 
-/* TAGS */
-.tag{
-display:inline-block;
-padding:6px 12px;
-background:#222;
-border-radius:20px;
-font-size:12px;
-color:#aaa;
-margin:6px 4px;
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
 }
 
-/* URGÊNCIA */
-.urgencia{
-color:#ff4d4d;
-font-weight:bold;
-margin-top:10px;
-font-size:14px;
-animation:blink 1.2s infinite;
-}
-
-/* PREÇO */
-.old{
-color:#777;
-text-decoration:line-through;
-margin-top:10px;
-font-size:16px;
-}
-
-.new{
-color:gold;
+.price{
 font-size:30px;
-font-weight:bold;
-margin:5px 0;
+color:gold;
+font-weight:900;
 }
 
-/* BOX */
-.box{
-background:#141414;
-padding:14px;
-border-radius:12px;
-margin-top:12px;
-text-align:left;
-font-size:13px;
-}
-
-/* SEGURANÇA */
-.secure{
-background:#0f0f0f;
-border:1px solid #222;
-padding:14px;
-border-radius:12px;
-margin-top:12px;
-text-align:left;
-font-size:13px;
-}
-
-/* BOTÃO */
 .btn{
 display:block;
-margin-top:18px;
-padding:16px;
-background:gold;
+margin-top:15px;
+padding:15px;
+background:white;
 color:black;
-text-decoration:none;
-border-radius:10px;
 font-weight:bold;
-font-size:16px;
-}
-
-/* ANIMAÇÃO DE SCROLL */
-.scroll {
-opacity: 0;
-transform: translateY(20px);
-transition: all 0.6s ease;
-}
-
-.scroll.show {
-opacity: 1;
-transform: translateY(0);
-}
-
-/* BLINK ESTOQUE */
-@keyframes blink{
-0%{opacity:1;}
-50%{opacity:0.4;}
-100%{opacity:1;}
+border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="logo">DH LUPAS</div>
-</header>
+<header>DH LUPAS</header>
 
 <div class="container">
 
@@ -148,89 +67,29 @@ transform: translateY(0);
 
 <img id="img">
 
-<div class="tag">🔥 Mais vendido</div>
-<div class="tag">⚡ Oferta especial</div>
+<div class="price" id="price"></div>
 
-<div class="urgencia" id="estoque"></div>
-
-<div class="old">de R$ 199,00</div>
-<div class="new" id="price"></div>
-
-<div class="box">
-<h3>🕶️ Produto Premium</h3>
-<p>Design moderno e confortável para o dia a dia</p>
-<p>Estilo urbano DH LUPAS</p>
-</div>
-
-<div class="box">
-<h3>🚚 Envio</h3>
-<p>• 3 a 10 dias úteis</p>
-<p>• Envio rápido após confirmação</p>
-</div>
-
-<div class="secure">
-<h3>🔒 Segurança</h3>
-<p>✔ Compra direta com a loja</p>
-<p>✔ Produto testado e aprovado</p>
-</div>
-
-<a id="buy" class="btn">🔥 COMPRAR AGORA</a>
+<a class="btn" id="buy">COMPRAR AGORA</a>
 
 </div>
 
 <script>
 
-const p = new URLSearchParams(window.location.search);
+let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 
-const nome = p.get("nome");
-const img = p.get("img");
+let id = new URLSearchParams(location.search).get("id");
 
-document.getElementById("nome").innerText = nome;
+let p = produtos[id];
 
-document.getElementById("img").src =
-"https://picsum.photos/seed/dh" + img + "/600/400";
-
-/* PREÇO */
-let price = 79 + (img % 4) * 17;
-
-/* ESTOQUE */
-let estoque = 2 + (img % 3);
-
-document.getElementById("estoque").innerText =
-"⚠ Apenas " + estoque + " unidades restantes";
-
-/* PREÇO */
-document.getElementById("price").innerText =
-"por R$ " + price.toFixed(2);
-
-/* WHATSAPP */
-let msg =
-"🔥 Quero comprar: " + nome +
-" | R$ " + price.toFixed(2) +
-" | Estoque: " + estoque;
+document.getElementById("nome").innerText = p.nome;
+document.getElementById("img").src = p.img;
+document.getElementById("price").innerText = "R$ " + p.preco;
 
 document.getElementById("buy").onclick = () => {
 window.location.href =
-"https://wa.me/5512992440819?text=" + encodeURIComponent(msg);
+"https://wa.me/5512992440819?text=" +
+encodeURIComponent("Quero comprar: " + p.nome + " por R$ " + p.preco);
 };
-
-/* 🔥 SCROLL ANIMATION */
-const elements = document.querySelectorAll(
-  ".tag, .urgencia, .box, .secure, .btn, h2, img"
-);
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-    }
-  });
-}, { threshold: 0.1 });
-
-elements.forEach(el => {
-  el.classList.add("scroll");
-  observer.observe(el);
-});
 
 </script>
 
