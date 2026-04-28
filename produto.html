@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>DH LUPAS - Produto</title>
+<title>DH LUPAS</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -15,12 +15,15 @@ color:white;
 text-align:center;
 }
 
-/* HEADER */
 header{
 background:black;
 padding:14px;
+border-bottom:1px solid #111;
+}
+
+.logo{
 font-weight:900;
-letter-spacing:3px;
+letter-spacing:4px;
 }
 
 /* CONTAINER */
@@ -28,65 +31,69 @@ letter-spacing:3px;
 max-width:600px;
 margin:auto;
 padding:15px;
+animation:fadeIn .8s ease;
 }
 
-/* IMAGEM FLUTUANTE */
+/* FLUTUAÇÃO */
 img{
 width:100%;
 border-radius:16px;
-margin-top:10px;
 animation:float 4s ease-in-out infinite;
 box-shadow:0 20px 40px rgba(0,0,0,0.6);
 }
 
-/* NOME */
-h2{
-margin:10px 0;
+/* PREÇO */
+.old{
+color:#666;
+text-decoration:line-through;
 }
 
-/* PREÇO */
-.price{
+.new{
 font-size:32px;
 font-weight:900;
-color:gold;
-margin:10px 0;
+color:white;
 }
 
-/* BOX INFO */
+/* BOX */
 .box{
 background:#111;
 padding:14px;
 border-radius:14px;
-margin-top:12px;
+margin-top:10px;
 text-align:left;
-font-size:13px;
 }
 
 /* BOTÃO */
 .btn{
 display:block;
-margin-top:18px;
+margin-top:15px;
 padding:16px;
 background:white;
 color:black;
 font-weight:bold;
 border-radius:12px;
 text-decoration:none;
-font-size:16px;
 }
 
-/* ANIMAÇÃO FLUTUAR */
+/* ANIMAÇÕES */
 @keyframes float{
 0%{transform:translateY(0);}
 50%{transform:translateY(-10px);}
 100%{transform:translateY(0);}
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(15px);}
+to{opacity:1;transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
-<header>DH LUPAS</header>
+<header>
+<div class="logo">DH LUPAS</div>
+</header>
 
 <div class="container">
 
@@ -94,13 +101,13 @@ font-size:16px;
 
 <img id="img">
 
-<div class="price" id="price"></div>
+<div class="old">R$ 199</div>
+<div class="new" id="price"></div>
 
 <div class="box">
 🕶️ Produto premium DH LUPAS<br>
 🚚 Entrega 3 a 10 dias úteis<br>
-🔒 Compra segura via WhatsApp<br>
-⚡ Estilo urbano moderno
+🔒 Compra segura via WhatsApp
 </div>
 
 <a id="buy" class="btn">COMPRAR AGORA</a>
@@ -109,31 +116,25 @@ font-size:16px;
 
 <script>
 
-let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+const p = new URLSearchParams(window.location.search);
 
-let id = new URLSearchParams(location.search).get("id");
+const nome = p.get("nome");
+const img = p.get("img");
 
-let p = produtos[id];
+document.getElementById("nome").innerText = nome;
 
-/* se não existir produto */
-if(!p){
-document.body.innerHTML = "<h2>Produto não encontrado</h2>";
-throw new Error("Sem produto");
-}
+document.getElementById("img").src =
+"https://picsum.photos/seed/dh" + img + "/600/400";
 
-/* preencher dados */
-document.getElementById("nome").innerText = p.nome;
-document.getElementById("img").src = p.img;
-document.getElementById("price").innerText = "R$ " + p.preco;
+let price = 79 + (img % 4) * 17;
 
-/* botão whatsapp */
+document.getElementById("price").innerText =
+"R$ " + price;
+
 document.getElementById("buy").onclick = () => {
 window.location.href =
 "https://wa.me/5512992440819?text=" +
-encodeURIComponent(
-"🔥 Quero comprar: " + p.nome +
-" | Preço: R$ " + p.preco
-);
+encodeURIComponent("Quero comprar: " + nome + " por R$ " + price);
 };
 
 </script>
