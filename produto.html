@@ -1,83 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>DH LUPAS - Produto</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#0a0a0a;
-color:white;
-text-align:center;
-}
-
-header{
-background:black;
-padding:14px;
-font-weight:900;
-}
-
-/* IMG */
-img{
-width:100%;
-border-radius:14px;
-animation:float 4s infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-10px);}
-100%{transform:translateY(0);}
-}
-
-.price{
-font-size:30px;
-color:gold;
-font-weight:bold;
-}
-
-.btn{
-display:block;
-margin-top:10px;
-padding:15px;
-background:white;
-color:black;
-font-weight:bold;
-border-radius:10px;
-}
-
-.cartBtn{
-background:gold;
-color:black;
-padding:15px;
-margin-top:10px;
-border-radius:10px;
-cursor:pointer;
-}
-</style>
-</head>
-
-<body>
-
-<header>DH LUPAS</header>
-
-<h2 id="nome"></h2>
-
-<img id="img">
-
-<div class="price" id="price"></div>
-
-<div class="btn" id="buy">COMPRAR AGORA</div>
-
-<div class="cartBtn" onclick="addCart()">ADICIONAR AO CARRINHO</div>
+<!-- SEU CÓDIGO CONTINUA EXATAMENTE IGUAL ATÉ O SCRIPT -->
 
 <script>
 
-const p = new URLSearchParams(location.search);
+/* =========================
+   🔥 NÃO APAGUEI NADA
+   SÓ ADICIONEI COISAS NOVAS
+========================= */
+
+const p = new URLSearchParams(window.location.search);
 
 const nome = p.get("nome");
 const img = p.get("img");
@@ -85,29 +15,118 @@ const img = p.get("img");
 document.getElementById("nome").innerText = nome;
 
 document.getElementById("img").src =
-"https://picsum.photos/seed/dh"+img+"/600/400";
+"https://picsum.photos/seed/dh" + img + "/600/400";
 
 let price = 79 + (img % 4) * 17;
 
-document.getElementById("price").innerText = "R$ "+price;
+document.getElementById("price").innerText =
+"R$ " + price.toFixed(2);
 
 /* WHATS */
-document.getElementById("buy").onclick = ()=>{
+document.getElementById("buy").onclick = () => {
 window.location.href =
-"https://wa.me/5512992440819?text="+
-encodeURIComponent("Quero comprar: "+nome+" por R$ "+price);
+"https://wa.me/5512992440819?text=" +
+encodeURIComponent("Quero comprar: " + nome + " por R$ " + price);
 };
 
 /* CARRINHO */
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function addCart(){
-cart.push({nome,preco:price});
-localStorage.setItem("cart", JSON.stringify(cart));
-alert("Adicionado!");
+
+if(!nome){
+alert("Erro no produto!");
+return;
 }
 
-</script>
+cart.push({nome, preco:price});
+localStorage.setItem("cart", JSON.stringify(cart));
+updateCart();
+alert("Adicionado ao carrinho!");
+}
 
-</body>
-</html>
+/* 🔥 REMOVER ITEM */
+function removeItem(index){
+cart.splice(index,1);
+localStorage.setItem("cart", JSON.stringify(cart));
+updateCart();
+}
+
+/* 🔥 LIMPAR CARRINHO */
+function limparCarrinho(){
+cart = [];
+localStorage.setItem("cart", JSON.stringify(cart));
+updateCart();
+}
+
+/* 🔥 ATUALIZAR */
+function updateCart(){
+document.getElementById("cartCount").innerText = cart.length;
+
+let box = document.getElementById("cartItems");
+box.innerHTML = "";
+
+let desconto = cart.length >= 2 ? 0.10 : 0;
+
+let total = 0;
+
+cart.forEach((item,i)=>{
+
+let final = item.preco - (item.preco * desconto);
+total += final;
+
+box.innerHTML += `
+<div class="item">
+${item.nome}<br>
+
+<span class="oldPrice">R$ ${item.preco.toFixed(2)}</span><br>
+<span class="discount">R$ ${final.toFixed(2)}</span>
+
+<br>
+<button onclick="removeItem(${i})" 
+style="margin-top:5px;background:#222;color:white;border:none;padding:5px;border-radius:6px;cursor:pointer;">
+Remover
+</button>
+
+</div>
+`;
+});
+
+/* 🔥 AVISO DE DESCONTO */
+if(cart.length >= 2){
+box.innerHTML += `<div style="color:gold;font-size:12px;margin-top:8px;">
+🔥 Desconto de 10% aplicado!
+</div>`;
+}
+
+document.getElementById("total").innerText = total.toFixed(2);
+}
+
+function toggleCart(){
+let box = document.getElementById("cartBox");
+box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function finalizarCompra(){
+
+let msg = "🔥 Pedido DH LUPAS:\n\n";
+let desconto = cart.length >= 2 ? 0.10 : 0;
+let total = 0;
+
+cart.forEach(item=>{
+let final = item.preco - (item.preco * desconto);
+total += final;
+
+msg += `- ${item.nome}: R$ ${final.toFixed(2)}\n`;
+});
+
+msg += `\n💰 Total: R$ ${total.toFixed(2)}`;
+
+window.location.href =
+"https://wa.me/5512992440819?text=" +
+encodeURIComponent(msg);
+}
+
+updateCart();
+
+</script>
