@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>DH LUPAS - Produto</title>
 
-<!-- 🔥 LOGO NA ABA (FAVICON) -->
 <link rel="icon" type="image/png" href="https://dummyimage.com/64x64/000/ffd700&text=DH">
 
 <style>
@@ -16,7 +15,6 @@ color:white;
 text-align:center;
 }
 
-/* HEADER */
 header{
 background:black;
 padding:20px;
@@ -29,7 +27,6 @@ letter-spacing:3px;
 font-weight:bold;
 }
 
-/* CONTAINER */
 .container{
 max-width:700px;
 margin:auto;
@@ -41,6 +38,11 @@ img{
 width:100%;
 border-radius:12px;
 margin-top:10px;
+transition:.3s;
+}
+
+img:hover{
+transform:scale(1.02);
 }
 
 /* TAGS */
@@ -52,6 +54,14 @@ border-radius:6px;
 font-size:12px;
 color:#aaa;
 margin:5px 3px;
+}
+
+/* URGÊNCIA */
+.urgencia{
+color:#ff4d4d;
+font-weight:bold;
+margin-top:10px;
+animation:blink 1.2s infinite;
 }
 
 /* PREÇO */
@@ -67,6 +77,7 @@ color:gold;
 font-size:34px;
 font-weight:bold;
 margin:5px 0;
+animation:pulse 1.8s infinite;
 }
 
 /* BOX */
@@ -88,7 +99,7 @@ margin-top:15px;
 text-align:left;
 }
 
-/* BOTÃO ÚNICO */
+/* BOTÃO */
 .btn{
 display:block;
 margin-top:20px;
@@ -106,10 +117,22 @@ transition:.3s;
 transform:scale(1.05);
 }
 
-/* ANIMAÇÃO */
+/* ANIMAÇÕES */
 @keyframes fadeUp{
 from{opacity:0;transform:translateY(20px);}
 to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes blink{
+0%{opacity:1;}
+50%{opacity:0.4;}
+100%{opacity:1;}
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
 }
 </style>
 </head>
@@ -129,6 +152,8 @@ to{opacity:1;transform:translateY(0);}
 <div class="tag">🔥 Mais vendido</div>
 <div class="tag">⚡ Oferta especial</div>
 
+<div class="urgencia" id="estoque"></div>
+
 <div class="old">de R$ 199,00</div>
 <div class="new" id="price"></div>
 
@@ -136,23 +161,20 @@ to{opacity:1;transform:translateY(0);}
 <h3>🕶️ Produto Premium</h3>
 <p>Design moderno e confortável</p>
 <p>Estilo urbano DH LUPAS</p>
-<p>Alta qualidade visual</p>
 </div>
 
 <div class="box">
 <h3>🚚 Envio</h3>
 <p>• 3 a 10 dias úteis</p>
-<p>• Processamento rápido após pedido</p>
+<p>• Processamento rápido</p>
 </div>
 
 <div class="secure">
 <h3>🔒 Segurança</h3>
 <p>✔ Compra direta com a loja</p>
-<p>✔ Atendimento humano no WhatsApp</p>
-<p>✔ Produto verificado</p>
+<p>✔ Produto testado e aprovado</p>
 </div>
 
-<!-- 🔥 ÚNICO BOTÃO -->
 <a id="buy" class="btn">🔥 COMPRAR AGORA</a>
 
 </div>
@@ -172,13 +194,21 @@ document.getElementById("img").src =
 /* PREÇO */
 let price = 79 + (img % 4) * 17;
 
+/* ESTOQUE DINÂMICO */
+let estoque = 2 + (img % 3);
+
+document.getElementById("estoque").innerText =
+"⚠ Últimas unidades: " + estoque;
+
+/* PREÇO */
 document.getElementById("price").innerText =
 "por R$ " + price.toFixed(2);
 
-/* WHATSAPP FINAL (AÇÃO DO BOTÃO) */
+/* WHATSAPP */
 let msg =
 "🔥 Quero comprar: " + nome +
-" | Preço: R$ " + price.toFixed(2);
+" | R$ " + price.toFixed(2) +
+" | Últimas unidades: " + estoque;
 
 document.getElementById("buy").onclick = () => {
 window.location.href =
