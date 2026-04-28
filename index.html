@@ -21,7 +21,7 @@ color:white;
 padding-top:80px;
 }
 
-/* HEADER FIXO + ANIMAÇÃO */
+/* HEADER */
 header{
 background:black;
 padding:20px;
@@ -34,36 +34,28 @@ top:0;
 left:0;
 width:100%;
 z-index:999;
-
-/* animação inicial */
-animation:fadeDown 0.8s ease;
 }
 
-/* LOGO BRILHO */
 .logo{
 font-size:22px;
 letter-spacing:3px;
 font-weight:bold;
-color:white;
-animation:glow 2.5s infinite alternate;
 }
 
-/* MENU */
 nav a{
 color:#aaa;
 margin:0 10px;
 text-decoration:none;
-transition:.3s;
 }
 
 nav a:hover{
 color:gold;
 }
 
-/* HERO */
+/* HERO (MUDADO AQUI) */
 .hero{
 height:300px;
-background:url('https://picsum.photos/1200/700?blur=2') center/cover;
+background:url('https://picsum.photos/1200/700?blur=3') center/cover;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -71,9 +63,10 @@ justify-content:center;
 
 .hero h1{
 background:rgba(0,0,0,0.6);
-padding:20px;
+padding:18px 22px;
 border-radius:10px;
-animation:fadeIn 1.2s ease;
+font-size:22px;
+text-align:center;
 }
 
 /* GRID */
@@ -88,14 +81,12 @@ padding:20px;
 background:#141414;
 border-radius:12px;
 overflow:hidden;
-transition:.3s;
 cursor:pointer;
-animation:fadeUp 0.6s ease;
+transition:.3s;
 }
 
 .card:hover{
 transform:translateY(-6px);
-box-shadow:0 10px 20px rgba(255,215,0,0.1);
 }
 
 .card img{
@@ -131,39 +122,12 @@ text-decoration:none;
 border-radius:8px;
 }
 
-/* BOTÃO VOLTAR AO TOPO */
-.top-btn{
-position:fixed;
-bottom:20px;
-right:20px;
-background:gold;
-color:black;
-padding:10px 14px;
-border-radius:50%;
-font-weight:bold;
-cursor:pointer;
-display:none;
-}
-
-/* ANIMAÇÕES */
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-20px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-@keyframes fadeIn{
-from{opacity:0;}
-to{opacity:1;}
-}
-
-@keyframes glow{
-0%{text-shadow:0 0 5px gold;}
-100%{text-shadow:0 0 20px gold;}
+/* FOOTER */
+footer{
+text-align:center;
+padding:30px;
+color:#666;
+border-top:1px solid #222;
 }
 </style>
 </head>
@@ -180,8 +144,9 @@ to{opacity:1;}
 </nav>
 </header>
 
+<!-- HERO NOVO -->
 <div class="hero" id="topo">
-<h1>ESTILO. ATITUDE. PRESENÇA.</h1>
+<h1>ÓCULOS ESTILO URBANO PARA O DIA A DIA</h1>
 </div>
 
 <section class="grid" id="colecao"></section>
@@ -195,20 +160,15 @@ Abrir WhatsApp
 </a>
 </section>
 
-<footer style="text-align:center;padding:30px;color:#666;">
+<footer>
 © DH LUPAS
 </footer>
 
-<!-- BOTÃO VOLTAR AO TOPO -->
-<div class="top-btn" id="topBtn">↑</div>
-
 <script>
 
-/* PRODUTOS */
 const produtos = [
 "Juliet Chrome","Juliet Black","Juliet Gold","Juliet Azul",
-"Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice",
-"Juliet Neon","Juliet Smoke"
+"Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice"
 ];
 
 const grid = document.getElementById("colecao");
@@ -227,17 +187,6 @@ onclick="window.location.href='produto.html?nome=${encodeURIComponent(nome)}&img
 `;
 
 });
-
-/* BOTÃO VOLTAR AO TOPO */
-const btn = document.getElementById("topBtn");
-
-window.onscroll = () => {
-btn.style.display = window.scrollY > 300 ? "block" : "none";
-};
-
-btn.onclick = () => {
-window.scrollTo({top:0, behavior:"smooth"});
-};
 
 </script>
 
