@@ -160,12 +160,6 @@ text-decoration:none;
 <a href="#colecao">Coleção</a>
 <a href="#contato">Contato</a>
 </nav>
-
-<!-- 🔥 ADD CONTADOR CARRINHO (não muda nada visualmente se não quiser) -->
-<div style="margin-left:10px;">
-🛒 <span id="cartCount">0</span>
-</div>
-
 </header>
 
 <!-- SLIDER -->
@@ -207,44 +201,32 @@ slides[index].classList.add("active");
 /* PRODUTOS */
 const produtos = [
 "Juliet Chrome","Juliet Black","Juliet Gold","Juliet Azul",
-"Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice"
+"Juliet Vermelha","Juliet Prata","Juliet Dark","Juliet Ice",
+"Juliet Tubágua"
 ];
 
 const grid = document.getElementById("colecao");
 
 produtos.forEach((nome,i)=>{
 
+let imagem = "https://picsum.photos/seed/dh"+i+"/600/400";
+
+/* 🔥 SUA IMAGEM REAL */
+if(nome === "Juliet Tubágua"){
+imagem = "juliet-tubagua.jpg";
+}
+
 grid.innerHTML += `
 <div class="card"
 onclick="window.location.href='produto.html?nome=${encodeURIComponent(nome)}&img=${i}'">
 
-<img src="https://picsum.photos/seed/dh${i}/600/400">
+<img src="${imagem}">
 <h3>${nome}</h3>
 <p>Ver produto</p>
 
 </div>
 `;
 
-});
-
-/* 🔥 FIX CARRINHO (ADICIONADO) */
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-function updateCartIndex(){
-let countEl = document.getElementById("cartCount");
-if(!countEl) return;
-countEl.innerText = cart.length;
-}
-
-window.addEventListener("load", ()=>{
-cart = JSON.parse(localStorage.getItem("cart")) || [];
-updateCartIndex();
-});
-
-window.addEventListener("focus", ()=>{
-cart = JSON.parse(localStorage.getItem("cart")) || [];
-updateCartIndex();
 });
 
 </script>
