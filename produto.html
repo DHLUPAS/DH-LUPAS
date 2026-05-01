@@ -44,6 +44,17 @@ padding:6px 10px;
 border-radius:8px;
 }
 
+/* 🔥 CONTADOR ANIMAÇÃO */
+.bump{
+animation:bump 0.3s ease;
+}
+
+@keyframes bump{
+0%{transform:scale(1);}
+50%{transform:scale(1.4);}
+100%{transform:scale(1);}
+}
+
 /* CONTAINER */
 .container{
 max-width:600px;
@@ -107,7 +118,7 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* CARRINHO ANTIGO (NÃO MEXI) */
+/* CARRINHO */
 #cartBox{
 position:fixed;
 top:60px;
@@ -166,27 +177,19 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* 🔥 NOVO CARRINHO */
-#cartOverlay{
+/* 🔥 ANIMAÇÃO VOAR */
+.fly-img{
 position:fixed;
-bottom:-100%;
-left:0;
-width:100%;
-height:70%;
-background:#0a0a0a;
-border-top-left-radius:20px;
-border-top-right-radius:20px;
-padding:15px;
 z-index:99999;
-transition:0.4s;
-overflow:auto;
+width:80px;
+height:60px;
+object-fit:cover;
+border-radius:10px;
+pointer-events:none;
+transition:all 0.8s cubic-bezier(.2,.8,.2,1);
 }
 
-#cartOverlay.show{
-bottom:0;
-}
-
-/* ANIMAÇÃO */
+/* ANIMAÇÃO FLUTUAR */
 @keyframes float{
 0%{transform:translateY(0);}
 50%{transform:translateY(-10px);}
@@ -197,26 +200,15 @@ bottom:0;
 
 <body>
 
-<!-- 🔥 BOTÃO VOLTAR -->
-<div onclick="history.back()" style="
-position:fixed;
-top:70px;
-left:10px;
-background:#111;
-padding:8px 12px;
-border-radius:8px;
-z-index:9999;
-cursor:pointer;
-font-size:12px;">
-← Voltar
-</div>
-
 <header>
 <div class="logo">DH LUPAS</div>
 <div class="cart" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div>
 </header>
 
-<!-- CARRINHO ANTIGO -->
+<!-- 🔊 SOM -->
+<audio id="cartSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+
+<!-- CARRINHO -->
 <div id="cartBox">
 <h3>Seu Carrinho</h3>
 <div id="cartItems"></div>
@@ -227,28 +219,6 @@ Total: R$ <span id="total">0</span>
 
 <div class="finalBtn" onclick="finalizarCompra()">
 🔥 COMPRAR AGORA (CARRINHO)
-</div>
-</div>
-
-<!-- 🔥 NOVO CARRINHO -->
-<div id="cartOverlay">
-<div style="text-align:center;margin-bottom:10px;"><b>Seu Carrinho</b></div>
-<div id="cartOverlayItems"></div>
-
-<div style="margin-top:10px;border-top:1px solid #222;padding-top:10px;">
-Total: R$ <span id="overlayTotal">0</span>
-</div>
-
-<div onclick="finalizarCompra()" style="
-margin-top:10px;
-background:gold;
-color:black;
-padding:12px;
-border-radius:10px;
-text-align:center;
-font-weight:bold;
-cursor:pointer;">
-COMPRAR AGORA
 </div>
 </div>
 
@@ -310,14 +280,22 @@ cart.push({nome, preco:price});
 localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
 alert("Adicionado ao carrinho!");
-updateOverlayCart();
+
+flyToCart();
+
+/* 🔊 SOM */
+document.getElementById("cartSound").play();
+
+/* 🔥 CONTADOR PULANDO */
+let count = document.getElementById("cartCount");
+count.classList.add("bump");
+setTimeout(()=>count.classList.remove("bump"),300);
 }
 
 function removeItem(index){
 cart.splice(index,1);
 localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
-updateOverlayCart();
 }
 
 function updateCart(){
@@ -327,6 +305,7 @@ let box = document.getElementById("cartItems");
 box.innerHTML = "";
 
 let desconto = cart.length >= 2 ? 0.10 : 0;
+
 let total = 0;
 
 cart.forEach((item,i)=>{
@@ -348,46 +327,18 @@ document.getElementById("total").innerText = total.toFixed(2);
 }
 
 function toggleCart(){
-let box = document.getElementById("cartOverlay");
-box.classList.toggle("show");
-updateOverlayCart();
-}
-
-function updateOverlayCart(){
-let box = document.getElementById("cartOverlayItems");
-box.innerHTML = "";
-
-let desconto = cart.length >= 2 ? 0.10 : 0;
-let total = 0;
-
-cart.forEach((item,i)=>{
-let final = item.preco - (item.preco * desconto);
-total += final;
-
-box.innerHTML += `
-<div style="margin-bottom:10px;border-bottom:1px solid #222;padding-bottom:5px;">
-${item.nome}<br>
-<span style="text-decoration:line-through;color:#777;font-size:12px;">
-R$ ${item.preco.toFixed(2)}
-</span><br>
-<span style="color:gold;font-weight:bold;">
-R$ ${final.toFixed(2)}
-</span>
-<div onclick="removeItem(${i})" style="color:red;font-size:12px;cursor:pointer;margin-top:5px;">
-remover
-</div>
-</div>
-`;
-});
-
-document.getElementById("overlayTotal").innerText = total.toFixed(2);
+let box = document.getElementById("cartBox");
+box.style.display = box.style.display === "block" ? "none" : "block";
 }
 
 function finalizarCompra(){
+
 let msg = "🔥 Carrinho:\n";
+let desconto = cart.length >= 2 ? 0.10 : 0;
 
 cart.forEach(item=>{
-msg += `${item.nome} - R$ ${item.preco}\n`;
+let final = item.preco - (item.preco * desconto);
+msg += `${item.nome} - R$ ${final.toFixed(2)}\n`;
 });
 
 window.location.href =
@@ -397,6 +348,38 @@ encodeURIComponent(msg);
 
 updateCart();
 
+/* 🔥 VOAR PRO CARRINHO */
+function flyToCart(){
+
+let img = document.getElementById("img");
+let cartIcon = document.querySelector(".cart");
+
+let imgRect = img.getBoundingClientRect();
+let cartRect = cartIcon.getBoundingClientRect();
+
+let clone = img.cloneNode(true);
+clone.classList.add("fly-img");
+
+clone.style.top = imgRect.top + "px";
+clone.style.left = imgRect.left + "px";
+clone.style.width = imgRect.width + "px";
+clone.style.height = imgRect.height + "px";
+
+document.body.appendChild(clone);
+
+setTimeout(()=>{
+clone.style.top = cartRect.top + "px";
+clone.style.left = cartRect.left + "px";
+clone.style.width = "30px";
+clone.style.height = "30px";
+clone.style.opacity = "0.5";
+},10);
+
+setTimeout(()=>{
+clone.remove();
+},800);
+
+}
 </script>
 
 </body>
